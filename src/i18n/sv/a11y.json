@@ -1,0 +1,51 @@
+{
+  "title": "Så här spelar jag",
+  "intro": "En vuxen kan välja vad som känns bra för dig.",
+  "bigText": {
+    "label": "Stora bokstäver",
+    "hint": "Gör all text större."
+  },
+  "fontFamily": {
+    "label": "Lättläst typsnitt",
+    "hint": "Bokstäver som är lättare att läsa."
+  },
+  "motion": {
+    "label": "Rörelse",
+    "full": "Mycket",
+    "reduced": "Lugnt",
+    "off": "Stilla"
+  },
+  "contrast": {
+    "label": "Färgkontrast",
+    "normal": "Mjuk",
+    "high": "Stark"
+  },
+  "calm": {
+    "label": "Lugn-läge",
+    "hint": "Färre färger och inget konfetti."
+  },
+  "captions": {
+    "label": "Textning",
+    "hint": "Visa det som sägs som text."
+  },
+  "readToMe": {
+    "label": "Läs för mig",
+    "hint": "Berättaren läser allt högt."
+  },
+  "simpleLanguage": {
+    "label": "Enkla ord",
+    "hint": "Kortare meningar."
+  },
+  "dwellMs": {
+    "label": "Vila för att klicka",
+    "hint": "Håll pekaren stilla för att välja.",
+    "off": "Av",
+    "slow": "Långsam",
+    "medium": "Lagom",
+    "fast": "Snabb"
+  },
+  "oneSwitch": {
+    "label": "En knapp",
+    "hint": "Spela med en enda knapp (mellanslag)."
+  }
+}

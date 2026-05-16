@@ -1,0 +1,77 @@
+{
+  "boot": {
+    "welcome": "Welcome to Bloomwilds",
+    "subtitle": "A gentle world waiting to wake up."
+  },
+  "profilePicker": {
+    "title": "Who's playing?",
+    "newProfile": "New player",
+    "createTitle": "Say your name",
+    "namePlaceholder": "My name is...",
+    "pickAge": "How old are you?",
+    "pickLang": "Which language?",
+    "pickSpark": "Pick your Spark",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure?"
+  },
+  "ageGroups": {
+    "3-4": "3–4 years",
+    "5-7": "5–7 years",
+    "8-9": "8–9 years",
+    "10-12": "10–12 years",
+    "comingSoon": "Coming soon"
+  },
+  "languages": {
+    "sv": "Svenska",
+    "en": "English"
+  },
+  "spark": {
+    "form": {
+      "blob": "Glimmer",
+      "fox": "Fox",
+      "bird": "Bird"
+    },
+    "palette": {
+      "sun": "Sun",
+      "sky": "Sky",
+      "meadow": "Meadow",
+      "berry": "Berry"
+    },
+    "outfit": {
+      "none": "None",
+      "hat": "Hat",
+      "scarf": "Scarf"
+    }
+  },
+  "home": {
+    "greeting": "Hi {{name}}!",
+    "play": "Play",
+    "stickers": "Stickers",
+    "spark": "Dress your Spark",
+    "settings": "Settings",
+    "switchProfile": "Switch player"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "howIPlay": "How I play",
+    "switchProfile": "Switch player"
+  },
+  "regionMap": {
+    "title": "Bloomwilds",
+    "asleep": "Asleep",
+    "blooming": "Waking",
+    "bloomed": "In bloom"
+  },
+  "challengeShell": {
+    "undo": "Undo",
+    "skip": "Skip",
+    "exit": "Leave",
+    "again": "Once more",
+    "wellDone": "Well done!"
+  },
+  "seeds": "Seeds",
+  "stickers": "Stickers"
+}

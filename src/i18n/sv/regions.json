@@ -1,0 +1,22 @@
+{
+  "letterglade": {
+    "name": "Bokstavslunden",
+    "tagline": "Träd som viskar bokstäver."
+  },
+  "numberbrook": {
+    "name": "Sifferbäcken",
+    "tagline": "Grodor som räknar näckrosor."
+  },
+  "critter-cove": {
+    "name": "Krypviken",
+    "tagline": "Små djur i tidvattenspölar."
+  },
+  "hue-hills": {
+    "name": "Färgkullarna",
+    "tagline": "Mönster och former i mjukt ljus."
+  },
+  "feelings-meadow": {
+    "name": "Känsloängen",
+    "tagline": "Moln som känner som vi."
+  }
+}
