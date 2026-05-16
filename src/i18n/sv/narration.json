@@ -1,0 +1,42 @@
+{
+  "intro": {
+    "text": "Bloomwilds har somnat. Tillsammans med din lilla gnista kan ni väcka världen igen — en plats i taget.",
+    "simple": "Hej! Världen sover. Hjälp till att väcka den."
+  },
+  "regionPick": {
+    "text": "Välj en plats att utforska.",
+    "simple": "Välj en plats."
+  },
+  "challengeIntro.letter-match": {
+    "text": "Lyssna på ljudet och dra bokstaven till trädet.",
+    "simple": "Dra bokstaven till trädet."
+  },
+  "challengeIntro.word-build": {
+    "text": "Bygg ordet bokstav för bokstav.",
+    "simple": "Bygg ordet."
+  },
+  "challengeIntro.phonics-pop": {
+    "text": "Pop på löven som börjar med rätt ljud.",
+    "simple": "Tryck på rätt löv."
+  },
+  "bloomTier.1": {
+    "text": "Titta, en blomma vaknar!",
+    "simple": "En blomma vaknar."
+  },
+  "bloomTier.2": {
+    "text": "Färgerna sprider sig som glada viskningar.",
+    "simple": "Mer färg!"
+  },
+  "bloomTier.3": {
+    "text": "Hela platsen sjunger igen. Du gjorde det här möjligt.",
+    "simple": "Du gjorde det!"
+  },
+  "success": {
+    "text": "Bra jobbat. Du fick en ny gnista i fickan.",
+    "simple": "Bra jobbat!"
+  },
+  "gentleError": {
+    "text": "Inte riktigt — försök gärna igen, du kan när du vill.",
+    "simple": "Försök igen."
+  }
+}

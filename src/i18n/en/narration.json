@@ -1,0 +1,42 @@
+{
+  "intro": {
+    "text": "The Bloomwilds has fallen asleep. Together with your little Spark, you can wake the world up — one place at a time.",
+    "simple": "Hi! The world is asleep. Help wake it up."
+  },
+  "regionPick": {
+    "text": "Pick a place to explore.",
+    "simple": "Pick a place."
+  },
+  "challengeIntro.letter-match": {
+    "text": "Listen to the sound and bring the letter to the tree.",
+    "simple": "Bring the letter to the tree."
+  },
+  "challengeIntro.word-build": {
+    "text": "Build the word letter by letter.",
+    "simple": "Build the word."
+  },
+  "challengeIntro.phonics-pop": {
+    "text": "Pop the leaves that start with the right sound.",
+    "simple": "Tap the right leaf."
+  },
+  "bloomTier.1": {
+    "text": "Look, a flower is waking up!",
+    "simple": "A flower wakes up."
+  },
+  "bloomTier.2": {
+    "text": "Colors spread like happy whispers.",
+    "simple": "More color!"
+  },
+  "bloomTier.3": {
+    "text": "The whole place is singing again. You made this happen.",
+    "simple": "You did it!"
+  },
+  "success": {
+    "text": "Nicely done. You got a new spark in your pocket.",
+    "simple": "Great job!"
+  },
+  "gentleError": {
+    "text": "Not quite — try again whenever you're ready.",
+    "simple": "Try again."
+  }
+}

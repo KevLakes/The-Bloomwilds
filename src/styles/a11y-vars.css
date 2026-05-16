@@ -1,0 +1,13 @@
+:root {
+  --font-family: system-ui, 'Quicksand', sans-serif;
+  --font-display: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+  --font-scale: 1;
+  --line-height: 1.4;
+  --motion-scale: 1;
+  --motion-duration-ms: 300ms;
+
+  --color-canvas: #fdf6e3;
+  --color-ink: #2e3440;
+  --color-accent: #7fb069;
+  --color-accent-2: #f4a6c0;
+}

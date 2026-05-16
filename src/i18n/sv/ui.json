@@ -1,0 +1,76 @@
+{
+  "boot": {
+    "welcome": "Välkommen till Bloomwilds",
+    "subtitle": "En mjuk värld som väntar på att vakna."
+  },
+  "profilePicker": {
+    "title": "Vem spelar?",
+    "newProfile": "Skapa ny",
+    "createTitle": "Säg ditt namn",
+    "namePlaceholder": "Mitt namn är...",
+    "pickAge": "Hur gammal är du?",
+    "pickLang": "Vilket språk?",
+    "pickSpark": "Välj din Gnista",
+    "create": "Skapa",
+    "edit": "Ändra",
+    "delete": "Ta bort",
+    "deleteConfirm": "Är du säker?"
+  },
+  "ageGroups": {
+    "3-4": "3–4 år",
+    "5-7": "5–7 år",
+    "8-9": "8–9 år",
+    "10-12": "10–12 år",
+    "comingSoon": "Kommer snart"
+  },
+  "languages": {
+    "sv": "Svenska",
+    "en": "English"
+  },
+  "spark": {
+    "form": {
+      "blob": "Glimmer",
+      "fox": "Räv",
+      "bird": "Fågel"
+    },
+    "palette": {
+      "sun": "Sol",
+      "sky": "Himmel",
+      "meadow": "Äng",
+      "berry": "Bär"
+    },
+    "outfit": {
+      "none": "Inget",
+      "hat": "Hatt",
+      "scarf": "Halsduk"
+    }
+  },
+  "home": {
+    "greeting": "Hej {{name}}!",
+    "play": "Spela",
+    "stickers": "Klistermärken",
+    "settings": "Inställningar",
+    "switchProfile": "Byt spelare"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "language": "Språk",
+    "howIPlay": "Så här spelar jag",
+    "switchProfile": "Byt spelare"
+  },
+  "regionMap": {
+    "title": "Bloomwilds",
+    "asleep": "Sover",
+    "blooming": "Vaknar",
+    "bloomed": "Blommar"
+  },
+  "challengeShell": {
+    "undo": "Ångra",
+    "skip": "Hoppa över",
+    "exit": "Lämna",
+    "again": "En gång till",
+    "wellDone": "Bra jobbat!"
+  },
+  "seeds": "Frön",
+  "stickers": "Klistermärken"
+}

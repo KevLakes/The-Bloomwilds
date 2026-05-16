@@ -1,0 +1,22 @@
+{
+  "letterglade": {
+    "name": "Letterglade",
+    "tagline": "Trees that whisper letters."
+  },
+  "numberbrook": {
+    "name": "Numberbrook",
+    "tagline": "Frogs counting lily pads."
+  },
+  "critter-cove": {
+    "name": "Critter Cove",
+    "tagline": "Tiny creatures in tide pools."
+  },
+  "hue-hills": {
+    "name": "Hue Hills",
+    "tagline": "Patterns and shapes in soft light."
+  },
+  "feelings-meadow": {
+    "name": "Feelings Meadow",
+    "tagline": "Cloud creatures that feel like we do."
+  }
+}

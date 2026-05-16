@@ -1,0 +1,65 @@
+@import './a11y-vars.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    font-family: var(--font-family, system-ui), system-ui, sans-serif;
+    font-size: 18px;
+    line-height: var(--line-height, 1.4);
+    background: var(--color-canvas, #fdf6e3);
+    color: var(--color-ink, #2e3440);
+  }
+
+  html[data-contrast='high'] {
+    --color-canvas: #ffffff;
+    --color-ink: #000000;
+  }
+
+  body {
+    @apply min-h-screen;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Calm mode: strip large background images and decorative motion */
+  html[data-calm='on'] [data-decorative] {
+    display: none !important;
+  }
+
+  /* Respect OS reduced-motion regardless of in-app setting */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .bw-card {
+    @apply rounded-bloom bg-white/80 shadow-bloom p-6;
+  }
+  .bw-btn {
+    @apply rounded-bloom bg-leaf text-white font-display font-bold px-6 py-4 text-xl shadow-bloom transition active:scale-95;
+    min-height: 64px;
+    min-width: 64px;
+  }
+  .bw-btn-secondary {
+    @apply rounded-bloom bg-white text-ink font-display font-bold px-6 py-4 text-xl shadow-bloom transition active:scale-95;
+    min-height: 64px;
+    min-width: 64px;
+  }
+  .bw-tap {
+    min-height: 64px;
+    min-width: 64px;
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "title": "How I play",
+  "intro": "A grown-up can pick what feels good for you.",
+  "bigText": {
+    "label": "Big letters",
+    "hint": "Make all text larger."
+  },
+  "fontFamily": {
+    "label": "Easy-read font",
+    "hint": "Letters that are easier to read."
+  },
+  "motion": {
+    "label": "Movement",
+    "full": "Lots",
+    "reduced": "Gentle",
+    "off": "Still"
+  },
+  "contrast": {
+    "label": "Color contrast",
+    "normal": "Soft",
+    "high": "Strong"
+  },
+  "calm": {
+    "label": "Calm mode",
+    "hint": "Fewer colors and no confetti."
+  },
+  "captions": {
+    "label": "Captions",
+    "hint": "Show what's said as text."
+  },
+  "readToMe": {
+    "label": "Read to me",
+    "hint": "The narrator reads everything out loud."
+  },
+  "simpleLanguage": {
+    "label": "Simple words",
+    "hint": "Shorter sentences."
+  },
+  "dwellMs": {
+    "label": "Dwell to tap",
+    "hint": "Hold the pointer still to choose.",
+    "off": "Off",
+    "slow": "Slow",
+    "medium": "Medium",
+    "fast": "Fast"
+  },
+  "oneSwitch": {
+    "label": "One switch",
+    "hint": "Play with a single key (space)."
+  }
+}
