@@ -3,16 +3,20 @@ import Boot from '@/pages/Boot';
 import ProfilePicker from '@/pages/ProfilePicker';
 import HowIPlay from '@/pages/HowIPlay';
 import Home from '@/pages/Home';
-import RegionMap from '@/pages/RegionMap';
 import Settings from '@/pages/Settings';
 import StickerBook from '@/pages/StickerBook';
+import Overworld from '@/engine/overworld/Overworld';
+import RegionScene from '@/engine/region/RegionScene';
+import ChallengeRoute from '@/engine/challenge/ChallengeHost';
 
 export const router = createBrowserRouter([
   { path: '/', element: <Boot /> },
   { path: '/profiles', element: <ProfilePicker /> },
   { path: '/how-i-play', element: <HowIPlay /> },
   { path: '/home', element: <Home /> },
-  { path: '/map', element: <RegionMap /> },
+  { path: '/map', element: <Overworld /> },
+  { path: '/map/:regionId', element: <RegionScene /> },
+  { path: '/play/:challengeId', element: <ChallengeRoute /> },
   { path: '/settings', element: <Settings /> },
   { path: '/stickers', element: <StickerBook /> },
   { path: '*', element: <Navigate to="/" replace /> },
