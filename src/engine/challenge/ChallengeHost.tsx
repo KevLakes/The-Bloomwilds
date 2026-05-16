@@ -8,6 +8,7 @@ import { getChallenge } from './registry';
 import { PickGame } from '@/components/primitives/PickGame';
 import { MatchGame } from '@/components/primitives/MatchGame';
 import { SortGame } from '@/components/primitives/SortGame';
+import { OrderGame } from '@/components/primitives/OrderGame';
 import { Button } from '@/components/ui/Button';
 import { SparkAvatar } from '@/components/ui/SparkAvatar';
 import { play as narrate } from '@/systems/narration/narrator';
@@ -129,6 +130,8 @@ export function ChallengeRoute() {
     body = <PickGame spec={spec} ctx={ctx} onComplete={handleComplete} />;
   } else if (spec?.kind === 'sort') {
     body = <SortGame spec={spec} ctx={ctx} onComplete={handleComplete} />;
+  } else if (spec?.kind === 'order') {
+    body = <OrderGame spec={spec} ctx={ctx} onComplete={handleComplete} />;
   } else {
     body = <p>—</p>;
   }

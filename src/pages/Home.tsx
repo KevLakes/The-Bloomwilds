@@ -46,10 +46,13 @@ export function Home() {
           <span>⭐ {progress?.inventory.stickers.length ?? 0} {t('stickers')}</span>
         </div>
 
-        <div className="flex flex-col gap-3 md:flex-row">
+        <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:justify-center">
           <Button onClick={() => navigate('/map')}>{t('home.play')}</Button>
           <Button variant="secondary" onClick={() => navigate('/stickers')}>
             {t('home.stickers')}
+          </Button>
+          <Button variant="secondary" onClick={() => navigate('/spark')}>
+            {t('home.spark')}
           </Button>
           <Button variant="secondary" onClick={() => navigate('/settings')}>
             {t('home.settings')}

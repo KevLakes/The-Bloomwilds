@@ -19,6 +19,54 @@
     "text": "Pop the leaves that start with the right sound.",
     "simple": "Tap the right leaf."
   },
+  "challengeIntro.count-lilies": {
+    "text": "Count the lilies out loud if you'd like, then tap the right number.",
+    "simple": "Count, then pick the number."
+  },
+  "challengeIntro.frog-jump-add": {
+    "text": "The frog hops a few lilies at a time. Add them up and pick the answer.",
+    "simple": "Add the numbers."
+  },
+  "challengeIntro.number-trace": {
+    "text": "Find each number's name.",
+    "simple": "Match number to word."
+  },
+  "challengeIntro.habitat-sort": {
+    "text": "Where does the critter live? Sort them home.",
+    "simple": "Sort the critters."
+  },
+  "challengeIntro.lifecycle-order": {
+    "text": "Put the butterfly's life in order, from tiny to tall.",
+    "simple": "Put in the right order."
+  },
+  "challengeIntro.critter-call": {
+    "text": "Which sound does each animal make?",
+    "simple": "Match animal to sound."
+  },
+  "challengeIntro.pattern-finish": {
+    "text": "Look at the pattern and pick what comes next.",
+    "simple": "What comes next?"
+  },
+  "challengeIntro.shape-sort": {
+    "text": "Sort the shapes into two piles.",
+    "simple": "Sort the shapes."
+  },
+  "challengeIntro.color-mix": {
+    "text": "Mixing colors makes new ones. Which one do you get?",
+    "simple": "What color do you get?"
+  },
+  "challengeIntro.name-the-feeling": {
+    "text": "What does the cloud feel? Match the face to the word.",
+    "simple": "What does the cloud feel?"
+  },
+  "challengeIntro.calm-breath": {
+    "text": "When feelings get big, small things help. Pick something that calms you.",
+    "simple": "What helps you feel calm?"
+  },
+  "challengeIntro.empathy-pick": {
+    "text": "Imagine a friend feels sad. What's a kind thing to do?",
+    "simple": "What would a kind friend do?"
+  },
   "bloomTier.1": {
     "text": "Look, a flower is waking up!",
     "simple": "A flower wakes up."

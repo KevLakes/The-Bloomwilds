@@ -19,6 +19,54 @@
     "text": "Pop på löven som börjar med rätt ljud.",
     "simple": "Tryck på rätt löv."
   },
+  "challengeIntro.count-lilies": {
+    "text": "Räkna näckrosorna högt om du vill, och tryck på rätt siffra.",
+    "simple": "Räkna och välj siffran."
+  },
+  "challengeIntro.frog-jump-add": {
+    "text": "Grodan hoppar några näckrosor i taget. Lägg ihop och välj svaret.",
+    "simple": "Lägg ihop talen."
+  },
+  "challengeIntro.number-trace": {
+    "text": "Hitta siffrans namn.",
+    "simple": "Para ihop siffra och ord."
+  },
+  "challengeIntro.habitat-sort": {
+    "text": "Var bor djuret? Sortera dem rätt.",
+    "simple": "Sortera djuren."
+  },
+  "challengeIntro.lifecycle-order": {
+    "text": "Sätt fjärilens liv i rätt ordning, från liten till stor.",
+    "simple": "Sätt i rätt ordning."
+  },
+  "challengeIntro.critter-call": {
+    "text": "Vilket ljud säger varje djur?",
+    "simple": "Para ihop djur och ljud."
+  },
+  "challengeIntro.pattern-finish": {
+    "text": "Titta på mönstret och välj vad som kommer härnäst.",
+    "simple": "Vad kommer härnäst?"
+  },
+  "challengeIntro.shape-sort": {
+    "text": "Sortera formerna i två högar.",
+    "simple": "Sortera formerna."
+  },
+  "challengeIntro.color-mix": {
+    "text": "När du blandar färger får du nya. Vilken får du?",
+    "simple": "Vilken färg får du?"
+  },
+  "challengeIntro.name-the-feeling": {
+    "text": "Vad känner molnet? Para ihop ansikte och ord.",
+    "simple": "Vad känner molnet?"
+  },
+  "challengeIntro.calm-breath": {
+    "text": "När känslor blir stora hjälper små saker. Välj något som lugnar dig.",
+    "simple": "Vad gör dig lugn?"
+  },
+  "challengeIntro.empathy-pick": {
+    "text": "Tänk om en vän är ledsen. Vad är snällt att göra?",
+    "simple": "Vad gör en snäll vän?"
+  },
   "bloomTier.1": {
     "text": "Titta, en blomma vaknar!",
     "simple": "En blomma vaknar."
