@@ -247,6 +247,82 @@ export function Flower({ size = 48, tint, className = '', style, ...rest }: Shap
   );
 }
 
+/** Paper-cut square with thick ink stroke — used as a designed alternative to ⬛ emoji. */
+export function Square({ size = 56, tint, className = '', style, ...rest }: ShapeProps) {
+  return (
+    <svg
+      viewBox="0 0 56 56"
+      width={size}
+      height={size}
+      role="img"
+      aria-hidden
+      className={className}
+      style={style}
+      {...rest}
+    >
+      <rect
+        x="6"
+        y="6"
+        width="44"
+        height="44"
+        rx="6"
+        fill={tint ?? 'currentColor'}
+        stroke="#2E3440"
+        strokeWidth="3"
+      />
+    </svg>
+  );
+}
+
+/** Paper-cut triangle with thick ink stroke — used as a designed alternative to 🔺 emoji. */
+export function Triangle({ size = 56, tint, className = '', style, ...rest }: ShapeProps) {
+  return (
+    <svg
+      viewBox="0 0 56 56"
+      width={size}
+      height={size}
+      role="img"
+      aria-hidden
+      className={className}
+      style={style}
+      {...rest}
+    >
+      <path
+        d="M28 6 L 50 48 L 6 48 Z"
+        fill={tint ?? 'currentColor'}
+        stroke="#2E3440"
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Paper-cut circle with thick ink stroke — used as a designed alternative to ⚪ emoji. */
+export function Circle({ size = 56, tint, className = '', style, ...rest }: ShapeProps) {
+  return (
+    <svg
+      viewBox="0 0 56 56"
+      width={size}
+      height={size}
+      role="img"
+      aria-hidden
+      className={className}
+      style={style}
+      {...rest}
+    >
+      <circle
+        cx="28"
+        cy="28"
+        r="21"
+        fill={tint ?? 'currentColor'}
+        stroke="#2E3440"
+        strokeWidth="3"
+      />
+    </svg>
+  );
+}
+
 /** Rounded mushroom/dome — used as decorative trees/bushes. */
 export function Mushroom({ size = 56, tint, className = '', style, ...rest }: ShapeProps) {
   return (

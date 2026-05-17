@@ -8,10 +8,21 @@ export interface MatchSpec {
   pairs: { id: string; left: string; right: string; soundKey?: string }[];
 }
 
+export type PickIconKind = 'square' | 'triangle' | 'circle' | 'star' | 'flower' | 'leaf';
+
 export interface PickSpec {
   kind: 'pick';
   prompt: string;
-  options: { id: string; label: string; isCorrect: boolean; soundKey?: string }[];
+  options: {
+    id: string;
+    label: string;
+    isCorrect: boolean;
+    soundKey?: string;
+    /** Optional shape icon rendered above the label. Replaces emoji in challenge content. */
+    icon?: PickIconKind;
+    /** Optional tint for the icon (CSS color or var); defaults to current accent. */
+    iconTint?: string;
+  }[];
   pickCount?: number;
 }
 

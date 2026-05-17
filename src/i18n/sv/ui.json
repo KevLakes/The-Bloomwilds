@@ -28,6 +28,11 @@
     "en": "English"
   },
   "spark": {
+    "sections": {
+      "form": "Form",
+      "palette": "Färg",
+      "outfit": "Outfit"
+    },
     "form": {
       "blob": "Glimmer",
       "fox": "Räv",
@@ -57,7 +62,18 @@
     "title": "Inställningar",
     "language": "Språk",
     "howIPlay": "Så här spelar jag",
-    "switchProfile": "Byt spelare"
+    "switchProfile": "Byt spelare",
+    "sections": {
+      "sound": "Ljud",
+      "soundOn": "På",
+      "soundMuted": "Tyst",
+      "music": "Musik",
+      "effects": "Effekter",
+      "narration": "Berättare",
+      "howIPlay": "Så här spelar jag",
+      "howIPlayBody": "Stora bokstäver, lugnt läge, långsam rörelse, undertexter och mer.",
+      "profile": "Profil"
+    }
   },
   "regionMap": {
     "title": "Bloomwilds",

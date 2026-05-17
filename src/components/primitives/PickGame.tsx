@@ -1,15 +1,41 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import type { PickSpec, ChallengeContext } from '@/engine/challenge/types';
+import type { PickSpec, ChallengeContext, PickIconKind } from '@/engine/challenge/types';
 import type { ChallengeResult } from '@/types';
 import { TapTarget } from '@/components/ui/TapTarget';
 import { Confetti } from '@/components/ui/Confetti';
-import { Sparkle } from '@/assets/illustrations/shapes';
+import {
+  Sparkle,
+  Square,
+  Triangle,
+  Circle,
+  Star,
+  Flower,
+  Leaf,
+} from '@/assets/illustrations/shapes';
 
 interface Props {
   spec: PickSpec;
   ctx: ChallengeContext;
   onComplete: (r: ChallengeResult) => void;
+}
+
+const ICONS: Record<PickIconKind, React.ComponentType<{ size?: number; tint?: string }>> = {
+  square: Square,
+  triangle: Triangle,
+  circle: Circle,
+  star: Star,
+  flower: Flower,
+  leaf: Leaf,
+};
+
+function PickIcon({ kind, tint }: { kind: PickIconKind; tint?: string }) {
+  const Cmp = ICONS[kind];
+  return (
+    <span style={{ color: tint ?? 'var(--color-accent)' }} aria-hidden>
+      <Cmp size={64} />
+    </span>
+  );
 }
 
 export function PickGame({ spec, ctx, onComplete }: Props) {
@@ -55,11 +81,12 @@ export function PickGame({ spec, ctx, onComplete }: Props) {
 
       <div
         className="grid w-full justify-items-center gap-3 sm:gap-4"
-        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 7rem), 1fr))' }}
+        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 8rem), 1fr))' }}
       >
         {spec.options.map((o) => {
           const isPicked = picked.includes(o.id);
           const isWrong = wrongs.includes(o.id);
+          const hasIcon = !!o.icon;
           return (
             <motion.div
               key={o.id}
@@ -78,16 +105,21 @@ export function PickGame({ spec, ctx, onComplete }: Props) {
                 disabled={isPicked}
                 aria-pressed={isPicked}
                 aria-label={o.label}
-                className={`relative flex aspect-square w-full items-center justify-center rounded-bloom-lg border-[3px] font-display font-bold transition ${
+                className={`relative flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-bloom-lg border-[3px] p-2 font-display font-bold transition ${
                   isPicked
                     ? 'border-accent bg-accent/20 text-ink'
                     : isWrong
                       ? 'border-accent-2 bg-accent-2/30 text-ink'
                       : 'border-ink/15 bg-white text-ink shadow-bloom'
                 }`}
-                style={{ fontSize: 'clamp(1.5rem, 6vw, 2.5rem)' }}
               >
-                {o.label}
+                {hasIcon && <PickIcon kind={o.icon!} tint={o.iconTint} />}
+                <span
+                  className="text-center leading-tight"
+                  style={{ fontSize: hasIcon ? 'clamp(0.9rem, 3vw, 1.15rem)' : 'clamp(1.5rem, 6vw, 2.5rem)' }}
+                >
+                  {o.label}
+                </span>
                 {isPicked && (
                   <span
                     aria-hidden

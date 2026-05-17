@@ -6,6 +6,7 @@ import { useProgressStore } from '@/stores/progressStore';
 import { Button } from '@/components/ui/Button';
 import { PageShell } from '@/components/ui/PageShell';
 import { Sparkle } from '@/assets/illustrations/shapes';
+import { StickerArt } from '@/assets/illustrations/stickers';
 import { stickers as allStickers } from '@/content/stickers';
 
 /** Deterministic small tilt per id so layout is stable across renders. */
@@ -67,9 +68,7 @@ export function StickerBook() {
                           boxShadow: '5px 6px 0 0 var(--color-ink)',
                         }}
                       >
-                        <span aria-hidden className="text-3xl sm:text-4xl">
-                          {s.glyph}
-                        </span>
+                        <StickerArt id={s.id} size={56} />
                         <span
                           className="absolute -right-2 -top-2 animate-sparkle"
                           aria-hidden

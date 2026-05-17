@@ -218,9 +218,8 @@ export function ChallengeRoute() {
 
   return (
     <ChallengeShell
-      title={t(`${def.id}.title`)}
+      title={t(def.titleKey)}
       onUndo={undoRef.current}
-      onSkip={() => navigate(`/map/${def.regionId}`)}
       onExit={() => navigate(`/map/${def.regionId}`)}
     >
       <AnimatePresence mode="wait">

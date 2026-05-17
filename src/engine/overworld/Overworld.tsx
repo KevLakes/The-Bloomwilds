@@ -11,6 +11,7 @@ import { PageShell } from '@/components/ui/PageShell';
 import { MapNode } from '@/components/ui/MapNode';
 import { BloomBackground } from '@/components/ui/BloomBackground';
 import { PathLine } from '@/assets/illustrations/shapes';
+import { RegionGlyph } from '@/assets/illustrations/regions/RegionGlyph';
 import { startAmbient } from '@/systems/audio/ambient';
 import { useProfileStore } from '@/stores/profileStore';
 
@@ -31,7 +32,7 @@ export function Overworld() {
     <PageShell region="home">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display font-bold text-moss text-fluid-2xl">{t('regionMap.title')}</h1>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <LanguageToggle />
           <Button variant="secondary" onClick={() => navigate('/home')}>
             ← {t('back', { ns: 'common' })}
@@ -85,7 +86,7 @@ export function Overworld() {
             >
               <MapNode
                 label={tr(`${r.id}.name`)}
-                glyph={r.glyph}
+                glyph={<RegionGlyph region={r.id} size={42} />}
                 state={state}
                 onClick={() => r.available && navigate(`/map/${r.id}`)}
                 disabled={!r.available}

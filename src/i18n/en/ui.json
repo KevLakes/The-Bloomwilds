@@ -28,6 +28,11 @@
     "en": "English"
   },
   "spark": {
+    "sections": {
+      "form": "Shape",
+      "palette": "Colour",
+      "outfit": "Outfit"
+    },
     "form": {
       "blob": "Glimmer",
       "fox": "Fox",
@@ -57,7 +62,18 @@
     "title": "Settings",
     "language": "Language",
     "howIPlay": "How I play",
-    "switchProfile": "Switch player"
+    "switchProfile": "Switch player",
+    "sections": {
+      "sound": "Sound",
+      "soundOn": "On",
+      "soundMuted": "Muted",
+      "music": "Music",
+      "effects": "Effects",
+      "narration": "Narration",
+      "howIPlay": "How I play",
+      "howIPlayBody": "Big letters, calm mode, slow motion, captions and more.",
+      "profile": "Profile"
+    }
   },
   "regionMap": {
     "title": "Bloomwilds",

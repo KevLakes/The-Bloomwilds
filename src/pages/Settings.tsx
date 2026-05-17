@@ -61,7 +61,7 @@ export function Settings() {
       <PaperLayer depth="md" grain glue={false}>
         <div className="bw-stack">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="font-display text-xl font-bold">Sound</h2>
+            <h2 className="font-display text-xl font-bold">{t('settings.sections.sound')}</h2>
             <TapTarget
               onClick={() => audio.setMuted(!audio.muted)}
               aria-pressed={audio.muted}
@@ -70,23 +70,25 @@ export function Settings() {
                 audio.muted ? 'bg-ink text-white' : 'bg-accent/15 text-ink'
               }`}
             >
-              {audio.muted ? '🔇 Muted' : '🔊 On'}
+              {audio.muted
+                ? `🔇 ${t('settings.sections.soundMuted')}`
+                : `🔊 ${t('settings.sections.soundOn')}`}
             </TapTarget>
           </div>
           <Slider
-            label="Music"
+            label={t('settings.sections.music')}
             icon="🎶"
             value={audio.music}
             onChange={(v) => audio.setVolume('music', v)}
           />
           <Slider
-            label="Effects"
+            label={t('settings.sections.effects')}
             icon="✨"
             value={audio.sfx}
             onChange={(v) => audio.setVolume('sfx', v)}
           />
           <Slider
-            label="Narration"
+            label={t('settings.sections.narration')}
             icon="💬"
             value={audio.narration}
             onChange={(v) => audio.setVolume('narration', v)}
@@ -97,10 +99,8 @@ export function Settings() {
       {/* How I Play */}
       <PaperLayer depth="md" grain>
         <div className="bw-stack">
-          <h2 className="font-display text-xl font-bold">How I play</h2>
-          <p className="text-sm text-ink-soft">
-            Big letters, calm mode, slow motion, captions and more.
-          </p>
+          <h2 className="font-display text-xl font-bold">{t('settings.sections.howIPlay')}</h2>
+          <p className="text-sm text-ink-soft">{t('settings.sections.howIPlayBody')}</p>
           <Button onClick={() => navigate('/how-i-play')}>{t('settings.howIPlay')}</Button>
         </div>
       </PaperLayer>
@@ -108,7 +108,7 @@ export function Settings() {
       {/* Profile */}
       <PaperLayer depth="md" grain>
         <div className="bw-stack">
-          <h2 className="font-display text-xl font-bold">Profile</h2>
+          <h2 className="font-display text-xl font-bold">{t('settings.sections.profile')}</h2>
           <div className="flex flex-wrap gap-3">
             <Button
               variant="secondary"

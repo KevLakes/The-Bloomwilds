@@ -5,12 +5,33 @@ import { motion } from 'framer-motion';
 import { useProfileStore } from '@/stores/profileStore';
 import { useProgressStore } from '@/stores/progressStore';
 import { Button } from '@/components/ui/Button';
+import { TapTarget } from '@/components/ui/TapTarget';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { SparkAvatar } from '@/components/ui/SparkAvatar';
 import { PageShell } from '@/components/ui/PageShell';
 import { BloomBackground } from '@/components/ui/BloomBackground';
 import { IconBadge } from '@/components/ui/IconBadge';
 import { startAmbient } from '@/systems/audio/ambient';
+
+interface ActionCardProps {
+  label: string;
+  emoji: string;
+  onClick: () => void;
+}
+
+function ActionCard({ label, emoji, onClick }: ActionCardProps) {
+  return (
+    <TapTarget
+      onClick={onClick}
+      className="flex flex-col items-center justify-center gap-1.5 rounded-bloom-lg border-[3px] border-ink/15 bg-white px-3 py-4 font-display font-bold text-ink shadow-bloom transition hover:-translate-y-0.5 hover:shadow-sticker"
+    >
+      <span aria-hidden className="text-2xl">
+        {emoji}
+      </span>
+      <span className="text-center text-sm leading-tight sm:text-base">{label}</span>
+    </TapTarget>
+  );
+}
 
 export function Home() {
   const { t } = useTranslation('ui');
@@ -55,17 +76,31 @@ export function Home() {
           />
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button onClick={() => navigate('/map')}>{t('home.play')}</Button>
-          <Button variant="secondary" onClick={() => navigate('/stickers')}>
-            {t('home.stickers')}
-          </Button>
-          <Button variant="secondary" onClick={() => navigate('/spark')}>
-            {t('home.spark')}
-          </Button>
-          <Button variant="secondary" onClick={() => navigate('/settings')}>
-            {t('home.settings')}
-          </Button>
+        {/* Primary CTA — Play */}
+        <Button onClick={() => navigate('/map')} className="text-fluid-xl">
+          {t('home.play')}
+        </Button>
+
+        {/* Secondary actions as a grid of equal-sized cards (no underlined-tab look) */}
+        <div
+          className="grid w-full max-w-md gap-3"
+          style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}
+        >
+          <ActionCard
+            emoji="⭐"
+            label={t('home.stickers')}
+            onClick={() => navigate('/stickers')}
+          />
+          <ActionCard
+            emoji="✨"
+            label={t('home.spark')}
+            onClick={() => navigate('/spark')}
+          />
+          <ActionCard
+            emoji="⚙️"
+            label={t('home.settings')}
+            onClick={() => navigate('/settings')}
+          />
         </div>
 
         <button

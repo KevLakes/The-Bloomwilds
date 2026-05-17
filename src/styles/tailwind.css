@@ -233,10 +233,12 @@
   .bw-btn-secondary {
     background: white;
     color: var(--color-ink);
-    box-shadow: 0 6px 0 0 color-mix(in srgb, var(--color-ink) 25%, transparent);
+    border: 3px solid color-mix(in srgb, var(--color-ink) 70%, transparent);
+    padding: 0.625rem 1.5rem; /* compensate for added border */
+    box-shadow: 0 6px 0 0 color-mix(in srgb, var(--color-ink) 50%, transparent);
   }
   .bw-btn-secondary:active {
-    box-shadow: 0 2px 0 0 color-mix(in srgb, var(--color-ink) 25%, transparent);
+    box-shadow: 0 2px 0 0 color-mix(in srgb, var(--color-ink) 50%, transparent);
   }
 
   .bw-btn-ghost {

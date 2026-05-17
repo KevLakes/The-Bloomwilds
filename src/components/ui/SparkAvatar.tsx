@@ -33,21 +33,36 @@ export function SparkAvatar({ look, size = 96, bounce = true }: Props) {
     >
       {/* glow */}
       <circle cx="50" cy="50" r="44" fill={colors.glow} opacity="0.55" />
-      {/* body — form-specific */}
+      {/* body — form-specific. Each form has bold silhouette cues so it's
+          unambiguous even at thumbnail sizes (Spark closet, profile cards). */}
       {look.form === 'blob' && (
         <circle cx="50" cy="52" r="30" fill={colors.body} stroke="#2E3440" strokeWidth="2.5" />
       )}
       {look.form === 'fox' && (
-        <g stroke="#2E3440" strokeWidth="2.5" fill={colors.body}>
-          <polygon points="28,30 36,18 42,32" />
-          <polygon points="72,30 64,18 58,32" />
-          <circle cx="50" cy="55" r="28" />
+        <g stroke="#2E3440" strokeWidth="2.5" fill={colors.body} strokeLinejoin="round">
+          {/* tall pointed ears */}
+          <polygon points="24,26 32,8 40,30" />
+          <polygon points="76,26 68,8 60,30" />
+          {/* inner ear */}
+          <polygon points="30,22 32,14 36,24" fill="#F4A6C0" stroke="none" />
+          <polygon points="70,22 68,14 64,24" fill="#F4A6C0" stroke="none" />
+          <circle cx="50" cy="56" r="28" />
+          {/* fox nose */}
+          <ellipse cx="50" cy="64" rx="3" ry="2.4" fill="#2E3440" stroke="none" />
         </g>
       )}
       {look.form === 'bird' && (
-        <g stroke="#2E3440" strokeWidth="2.5" fill={colors.body}>
-          <ellipse cx="50" cy="54" rx="28" ry="26" />
-          <polygon points="50,42 56,50 50,50" fill="#F9A86A" />
+        <g stroke="#2E3440" strokeWidth="2.5" fill={colors.body} strokeLinejoin="round">
+          {/* body */}
+          <ellipse cx="50" cy="54" rx="26" ry="26" />
+          {/* wing */}
+          <path d="M20 56 Q 30 42 44 50 Q 36 64 22 64 Z" fill={colors.glow} />
+          {/* tail tuft */}
+          <path d="M78 48 L 92 40 L 86 56 Z" />
+          {/* beak */}
+          <polygon points="36,52 24,56 36,60" fill="#F9A86A" stroke="#2E3440" strokeWidth="2" />
+          {/* head crest */}
+          <path d="M50 26 Q 54 14 60 22" stroke="#2E3440" strokeWidth="2.5" fill="none" strokeLinecap="round" />
         </g>
       )}
       {/* eyes */}
