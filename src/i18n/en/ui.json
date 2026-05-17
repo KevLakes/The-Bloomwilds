@@ -79,7 +79,8 @@
     "title": "Bloomwilds",
     "asleep": "Asleep",
     "blooming": "Waking",
-    "bloomed": "In bloom"
+    "bloomed": "In bloom",
+    "pickPlace": "Tap a place to explore"
   },
   "challengeShell": {
     "undo": "Undo",

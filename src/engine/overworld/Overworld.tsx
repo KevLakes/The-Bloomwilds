@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -6,14 +6,15 @@ import { regions } from '@/content/regions';
 import { useProgressStore } from '@/stores/progressStore';
 import { Button } from '@/components/ui/Button';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
-import { NarratedText } from '@/components/ui/NarratedText';
 import { PageShell } from '@/components/ui/PageShell';
-import { MapNode } from '@/components/ui/MapNode';
-import { BloomBackground } from '@/components/ui/BloomBackground';
-import { PathLine } from '@/assets/illustrations/shapes';
-import { RegionGlyph } from '@/assets/illustrations/regions/RegionGlyph';
+import { MapIsland } from '@/components/ui/MapIsland';
+import { WorldMap } from '@/assets/illustrations/regions/WorldMap';
+import { SparkAvatar } from '@/components/ui/SparkAvatar';
 import { startAmbient } from '@/systems/audio/ambient';
+import { playSfx } from '@/systems/audio/procedural';
 import { useProfileStore } from '@/stores/profileStore';
+import { useA11yStore } from '@/stores/a11yStore';
+import type { RegionId } from '@/types';
 
 export function Overworld() {
   const { t } = useTranslation('ui');
@@ -22,17 +23,41 @@ export function Overworld() {
   const active = useProfileStore((s) => s.active);
   const progress = useProgressStore((s) => s.progress);
   const loadFor = useProgressStore((s) => s.loadFor);
+  const motionLevel = useA11yStore((s) => s.settings.motion);
+  const calm = useA11yStore((s) => s.settings.calm);
+  const animated = motionLevel !== 'off' && !calm;
+  const [zoomingTo, setZoomingTo] = useState<RegionId | null>(null);
 
   useEffect(() => {
     if (active && !progress) void loadFor(active.id);
     startAmbient('home');
   }, [active, progress, loadFor]);
 
+  const handleRegionTap = (regionId: RegionId) => {
+    if (zoomingTo) return;
+    playSfx('page-transition');
+    if (!animated) {
+      navigate(`/map/${regionId}`);
+      return;
+    }
+    setZoomingTo(regionId);
+    window.setTimeout(() => navigate(`/map/${regionId}`), 520);
+  };
+
   return (
-    <PageShell region="home">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display font-bold text-moss text-fluid-2xl">{t('regionMap.title')}</h1>
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+    <PageShell variant="bare" className="relative min-h-screen-d overflow-hidden">
+      {/* Top chrome — floats above the world */}
+      <header
+        className="pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-wrap items-center justify-between gap-2 px-safe pt-safe"
+        style={{ paddingBottom: '0.75rem' }}
+      >
+        <h1
+          className="pointer-events-auto rounded-bloom-lg bg-white/70 px-4 py-2 font-display font-bold text-moss text-fluid-2xl shadow-bloom backdrop-blur-sm"
+          style={{ border: '3px solid color-mix(in srgb, var(--color-ink) 18%, transparent)' }}
+        >
+          {t('regionMap.title')}
+        </h1>
+        <div className="pointer-events-auto flex flex-wrap items-center gap-2 sm:gap-3">
           <LanguageToggle />
           <Button variant="secondary" onClick={() => navigate('/home')}>
             ← {t('back', { ns: 'common' })}
@@ -40,31 +65,17 @@ export function Overworld() {
         </div>
       </header>
 
-      <NarratedText
-        narrationKey="regionPick"
-        className="text-center text-fluid-xl text-ink-soft"
-      />
-
-      <section
-        className="relative aspect-[16/10] w-full overflow-hidden rounded-bloom-lg shadow-bloom-lg"
+      {/* The world — fills the page; islands are positioned over it */}
+      <motion.section
+        className="absolute inset-0 z-0"
         aria-label={t('regionMap.title')}
-        style={{
-          background:
-            'radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 60%), linear-gradient(180deg, var(--color-canvas-2) 0%, var(--color-canvas) 100%)',
-        }}
+        animate={zoomingTo ? { scale: animated ? 1.08 : 1, filter: 'brightness(1.05)' } : { scale: 1, filter: 'brightness(1)' }}
+        transition={{ duration: animated ? 0.55 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+        style={{ transformOrigin: 'center' }}
       >
-        <BloomBackground region="home" tier={3} fadeBottom={false} />
+        <WorldMap />
 
-        {/* Winding path connecting nodes */}
-        <div
-          data-decorative
-          aria-hidden
-          className="pointer-events-none absolute inset-x-[6%] top-[28%] -z-10"
-          style={{ color: 'var(--color-accent)', opacity: 0.5 }}
-        >
-          <PathLine size="100%" />
-        </div>
-
+        {/* Region islands */}
         {regions.map((r) => {
           const tier = (progress?.bloomTier[r.id] ?? 0) as 0 | 1 | 2 | 3;
           const stateKey = tier === 0 ? 'asleep' : tier >= 3 ? 'bloomed' : 'blooming';
@@ -78,25 +89,58 @@ export function Overworld() {
           return (
             <motion.div
               key={r.id}
-              className="absolute"
+              className="absolute z-10"
               style={{ left: `${r.pos.x}%`, top: `${r.pos.y}%` }}
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, y: 18, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.06 * regions.indexOf(r), ease: 'easeOut' }}
             >
-              <MapNode
+              <MapIsland
+                regionId={r.id}
                 label={tr(`${r.id}.name`)}
-                glyph={<RegionGlyph region={r.id} size={42} />}
                 state={state}
-                onClick={() => r.available && navigate(`/map/${r.id}`)}
+                onClick={() => r.available && handleRegionTap(r.id)}
                 disabled={!r.available}
                 ariaLabel={`${tr(`${r.id}.name`)} — ${t(`regionMap.${stateKey}` as const)}`}
                 subLabel={!r.available ? t('ageGroups.comingSoon') : undefined}
+                zooming={zoomingTo === r.id}
+                someoneElseZooming={!!zoomingTo && zoomingTo !== r.id}
               />
             </motion.div>
           );
         })}
-      </section>
+
+        {/* Spark companion idling in a corner */}
+        {active && animated && !zoomingTo && (
+          <motion.div
+            data-decorative
+            className="pointer-events-none absolute z-10"
+            style={{ left: '8%', bottom: '12%' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: [0, -6, 0] }}
+            transition={{ y: { duration: 2.6, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 0.6, delay: 0.4 } }}
+          >
+            <SparkAvatar look={active.spark} size={64} bounce={false} />
+          </motion.div>
+        )}
+      </motion.section>
+
+      {/* Bottom instruction pill — floats above world */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center px-safe pb-safe">
+        <motion.p
+          className="pointer-events-auto rounded-full bg-white/85 px-5 py-2.5 font-display text-sm shadow-bloom backdrop-blur-sm sm:text-base"
+          style={{
+            border: '3px solid color-mix(in srgb, var(--color-ink) 18%, transparent)',
+            color: 'var(--color-ink)',
+            marginBottom: '0.5rem',
+          }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          {t('regionMap.pickPlace')}
+        </motion.p>
+      </div>
     </PageShell>
   );
 }
