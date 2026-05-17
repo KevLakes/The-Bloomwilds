@@ -1,13 +1,35 @@
 :root {
+  /* Typography */
   --font-family: system-ui, 'Quicksand', sans-serif;
   --font-display: 'Fredoka', 'Quicksand', system-ui, sans-serif;
   --font-scale: 1;
   --line-height: 1.4;
+
+  /* Motion */
   --motion-scale: 1;
   --motion-duration-ms: 300ms;
 
+  /* Region-theme tokens (overridden by applyRegionTheme) */
   --color-canvas: #fdf6e3;
+  --color-canvas-2: #fff8ea;
   --color-ink: #2e3440;
+  --color-ink-soft: #4a5666;
   --color-accent: #7fb069;
   --color-accent-2: #f4a6c0;
+  --color-accent-3: #f9d77e;
+  --color-glow: #ffe9a3;
+
+  /* Layout — fluid page chrome */
+  --bw-page-padding-inline: clamp(1rem, 4vw, 2.5rem);
+  --bw-page-padding-block: clamp(1rem, 3vw, 2.5rem);
+  --bw-content-max: 64rem;
+  --bw-content-max-narrow: 36rem;
+  --bw-section-gap: clamp(1rem, 2.5vw, 2rem);
+  --bw-card-gap: clamp(0.75rem, 1.5vw, 1.25rem);
+
+  /* Safe-area insets (resolved by env() in browsers that support it) */
+  --bw-safe-top: env(safe-area-inset-top, 0px);
+  --bw-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --bw-safe-left: env(safe-area-inset-left, 0px);
+  --bw-safe-right: env(safe-area-inset-right, 0px);
 }

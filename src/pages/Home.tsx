@@ -7,7 +7,7 @@ import { useProgressStore } from '@/stores/progressStore';
 import { Button } from '@/components/ui/Button';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { SparkAvatar } from '@/components/ui/SparkAvatar';
-import { applyRegionTheme } from '@/systems/theming/regionTheme';
+import { PageShell } from '@/components/ui/PageShell';
 
 export function Home() {
   const { t } = useTranslation('ui');
@@ -17,7 +17,6 @@ export function Home() {
   const progress = useProgressStore((s) => s.progress);
 
   useEffect(() => {
-    applyRegionTheme('home');
     if (active) void loadProgress(active.id);
   }, [active, loadProgress]);
 
@@ -28,25 +27,33 @@ export function Home() {
   if (!active) return null;
 
   return (
-    <main className="min-h-screen bg-canvas px-6 py-10">
-      <header className="mx-auto mb-8 flex max-w-5xl items-center justify-between">
-        <h1 className="font-display text-3xl font-bold text-moss">
+    <PageShell region="home">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display font-bold text-moss text-fluid-2xl">
           {t('home.greeting', { name: active.name })}
         </h1>
         <LanguageToggle />
       </header>
 
-      <section className="mx-auto flex max-w-5xl flex-col items-center gap-6">
+      <section className="bw-stack items-center text-center">
         <motion.div initial={{ scale: 0.85 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
           <SparkAvatar look={active.spark} size={180} />
         </motion.div>
 
-        <div className="flex items-center gap-4 text-lg">
-          <span>🌱 {progress?.seeds ?? 0} {t('seeds')}</span>
-          <span>⭐ {progress?.inventory.stickers.length ?? 0} {t('stickers')}</span>
+        <div className="flex flex-wrap items-center justify-center gap-3 text-lg">
+          <span className="bw-pill inline-flex items-center gap-2 font-display font-bold">
+            <span aria-hidden>🌱</span>
+            <span>{progress?.seeds ?? 0}</span>
+            <span className="text-ink-soft font-normal">{t('seeds')}</span>
+          </span>
+          <span className="bw-pill inline-flex items-center gap-2 font-display font-bold">
+            <span aria-hidden>⭐</span>
+            <span>{progress?.inventory.stickers.length ?? 0}</span>
+            <span className="text-ink-soft font-normal">{t('stickers')}</span>
+          </span>
         </div>
 
-        <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:justify-center">
+        <div className="flex flex-wrap items-center justify-center gap-3">
           <Button onClick={() => navigate('/map')}>{t('home.play')}</Button>
           <Button variant="secondary" onClick={() => navigate('/stickers')}>
             {t('home.stickers')}
@@ -65,12 +72,12 @@ export function Home() {
             await profileStore.setActive(undefined);
             navigate('/profiles');
           }}
-          className="mt-6 text-sm text-ink/60 underline"
+          className="bw-tap mt-4 text-sm text-ink-soft underline-offset-4 hover:underline"
         >
           {t('home.switchProfile')}
         </button>
       </section>
-    </main>
+    </PageShell>
   );
 }
 

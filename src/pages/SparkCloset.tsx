@@ -4,6 +4,7 @@ import { useProfileStore } from '@/stores/profileStore';
 import { Button } from '@/components/ui/Button';
 import { TapTarget } from '@/components/ui/TapTarget';
 import { SparkAvatar } from '@/components/ui/SparkAvatar';
+import { PageShell } from '@/components/ui/PageShell';
 import type { SparkForm, SparkLook } from '@/types';
 
 const FORMS: SparkForm[] = ['blob', 'fox', 'bird'];
@@ -26,15 +27,15 @@ export function SparkCloset() {
   };
 
   return (
-    <main className="min-h-screen bg-canvas px-6 py-10">
-      <header className="mx-auto mb-6 flex max-w-3xl items-center justify-between">
-        <h1 className="font-display text-3xl font-bold text-moss">{t('profilePicker.pickSpark')}</h1>
+    <PageShell region="home" width="narrow">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display font-bold text-moss text-fluid-2xl">{t('profilePicker.pickSpark')}</h1>
         <Button variant="secondary" onClick={() => navigate('/home')}>
           ← {t('back', { ns: 'common' })}
         </Button>
       </header>
 
-      <div className="mx-auto flex max-w-3xl flex-col items-center gap-8">
+      <div className="flex flex-col items-center gap-6">
         <SparkAvatar look={active.spark} size={200} />
 
         <section className="bw-card w-full space-y-3">
@@ -92,7 +93,7 @@ export function SparkCloset() {
           </div>
         </section>
       </div>
-    </main>
+    </PageShell>
   );
 }
 

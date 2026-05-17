@@ -11,20 +11,31 @@
 
   html {
     font-family: var(--font-family, system-ui), system-ui, sans-serif;
-    font-size: 18px;
+    /* Fluid root: scales from ~15px on phones to ~20px on desktop, then a11y --font-scale stacks on top */
+    font-size: calc(clamp(15px, 0.85rem + 0.45vw, 20px) * var(--font-scale, 1));
     line-height: var(--line-height, 1.4);
     background: var(--color-canvas, #fdf6e3);
     color: var(--color-ink, #2e3440);
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
 
   html[data-contrast='high'] {
     --color-canvas: #ffffff;
+    --color-canvas-2: #ffffff;
     --color-ink: #000000;
+    --color-ink-soft: #1a1a1a;
   }
 
   body {
-    @apply min-h-screen;
+    min-height: 100dvh;
+    background: var(--color-canvas);
     -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  #root {
+    min-height: 100dvh;
   }
 
   /* Calm mode: strip large background images and decorative motion */
@@ -42,24 +53,217 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* Smooth focus rings, never sharp default */
+  :focus-visible {
+    outline: 3px solid var(--color-accent, #7fb069);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
 }
 
 @layer components {
+  /* Page chrome — wraps every route */
+  .bw-page {
+    min-height: 100dvh;
+    width: 100%;
+    background:
+      radial-gradient(circle at 12% 0%, var(--color-glow) 0%, transparent 38%),
+      radial-gradient(circle at 90% 100%, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 42%),
+      linear-gradient(180deg, var(--color-canvas-2) 0%, var(--color-canvas) 60%);
+    padding-top: max(var(--bw-page-padding-block), var(--bw-safe-top));
+    padding-bottom: max(var(--bw-page-padding-block), var(--bw-safe-bottom));
+    padding-left: max(var(--bw-page-padding-inline), var(--bw-safe-left));
+    padding-right: max(var(--bw-page-padding-inline), var(--bw-safe-right));
+  }
+
+  .bw-page-bare {
+    min-height: 100dvh;
+    width: 100%;
+    padding-top: var(--bw-safe-top);
+    padding-bottom: var(--bw-safe-bottom);
+    padding-left: var(--bw-safe-left);
+    padding-right: var(--bw-safe-right);
+  }
+
+  /* Centered content column with fluid max width */
+  .bw-content {
+    width: min(100%, var(--bw-content-max));
+    margin-inline: auto;
+  }
+  .bw-content-narrow {
+    width: min(100%, var(--bw-content-max-narrow));
+    margin-inline: auto;
+  }
+
+  /* Vertical stack with fluid gap */
+  .bw-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bw-section-gap);
+  }
+
+  /* Auto-fit card grid: cards stay readable; columns adapt to available width */
+  .bw-grid-cards {
+    display: grid;
+    gap: var(--bw-card-gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+
+  /* Hero slot — large feature card, breathes at every size */
+  .bw-hero {
+    display: grid;
+    gap: var(--bw-card-gap);
+    place-items: center;
+    text-align: center;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  /* Card variants */
   .bw-card {
-    @apply rounded-bloom bg-white/80 shadow-bloom p-6;
+    border-radius: 1.25rem;
+    background: color-mix(in srgb, white 88%, transparent);
+    box-shadow: 0 10px 28px -12px rgba(46, 52, 64, 0.22);
+    padding: clamp(1rem, 2.5vw, 1.75rem);
+    backdrop-filter: saturate(1.1);
   }
+
+  .bw-sticker {
+    position: relative;
+    border-radius: 1.5rem;
+    background: white;
+    border: 3px solid var(--color-ink);
+    box-shadow: 6px 8px 0 0 var(--color-ink);
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    transition: transform 120ms ease, box-shadow 120ms ease;
+  }
+  .bw-sticker:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 10px 0 0 var(--color-ink);
+  }
+  .bw-sticker:active {
+    transform: translate(3px, 4px);
+    box-shadow: 2px 3px 0 0 var(--color-ink);
+  }
+
+  /* Buttons — sticker physics */
   .bw-btn {
-    @apply rounded-bloom bg-leaf text-white font-display font-bold px-6 py-4 text-xl shadow-bloom transition active:scale-95;
-    min-height: 64px;
-    min-width: 64px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 56px;
+    min-width: 56px;
+    padding: 0.875rem 1.5rem;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1rem, 0.8rem + 0.5vw, 1.25rem);
+    box-shadow: 0 6px 0 0 color-mix(in srgb, var(--color-accent) 55%, black);
+    transition: transform 100ms ease, box-shadow 100ms ease, filter 120ms ease;
+    cursor: pointer;
+    border: none;
+    user-select: none;
   }
+  .bw-btn:hover {
+    filter: brightness(1.05);
+  }
+  .bw-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 0 color-mix(in srgb, var(--color-accent) 55%, black);
+  }
+  .bw-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
   .bw-btn-secondary {
-    @apply rounded-bloom bg-white text-ink font-display font-bold px-6 py-4 text-xl shadow-bloom transition active:scale-95;
-    min-height: 64px;
-    min-width: 64px;
+    background: white;
+    color: var(--color-ink);
+    box-shadow: 0 6px 0 0 color-mix(in srgb, var(--color-ink) 25%, transparent);
   }
+  .bw-btn-secondary:active {
+    box-shadow: 0 2px 0 0 color-mix(in srgb, var(--color-ink) 25%, transparent);
+  }
+
+  .bw-btn-ghost {
+    background: transparent;
+    color: var(--color-ink-soft);
+    box-shadow: none;
+    font-weight: 600;
+  }
+  .bw-btn-ghost:hover {
+    background: color-mix(in srgb, var(--color-ink) 6%, transparent);
+  }
+  .bw-btn-ghost:active {
+    transform: none;
+  }
+
+  /* Tap target enforcement — never smaller than 48px hit area */
   .bw-tap {
-    min-height: 64px;
-    min-width: 64px;
+    min-height: 48px;
+    min-width: 48px;
+    touch-action: manipulation;
+  }
+
+  /* Pill chrome (used by language toggle, caption, etc.) */
+  .bw-pill {
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    background: color-mix(in srgb, white 90%, transparent);
+    box-shadow: 0 6px 18px -8px rgba(46, 52, 64, 0.25);
+  }
+}
+
+@layer utilities {
+  /* Dynamic viewport height utilities (modern phones) */
+  .min-h-screen-d {
+    min-height: 100dvh;
+  }
+  .h-screen-d {
+    height: 100dvh;
+  }
+  .min-h-screen-s {
+    min-height: 100svh;
+  }
+
+  /* Safe-area padding helpers */
+  .pt-safe {
+    padding-top: max(var(--bw-page-padding-block), var(--bw-safe-top));
+  }
+  .pb-safe {
+    padding-bottom: max(var(--bw-page-padding-block), var(--bw-safe-bottom));
+  }
+  .pl-safe {
+    padding-left: max(var(--bw-page-padding-inline), var(--bw-safe-left));
+  }
+  .pr-safe {
+    padding-right: max(var(--bw-page-padding-inline), var(--bw-safe-right));
+  }
+  .px-safe {
+    padding-left: max(var(--bw-page-padding-inline), var(--bw-safe-left));
+    padding-right: max(var(--bw-page-padding-inline), var(--bw-safe-right));
+  }
+  .py-safe {
+    padding-top: max(var(--bw-page-padding-block), var(--bw-safe-top));
+    padding-bottom: max(var(--bw-page-padding-block), var(--bw-safe-bottom));
+  }
+
+  /* Fluid type helpers (use with caution — most type can stay on Tailwind's scale) */
+  .text-fluid-xl {
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  }
+  .text-fluid-2xl {
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  }
+  .text-fluid-3xl {
+    font-size: clamp(1.875rem, 1.2rem + 2.4vw, 3rem);
+  }
+  .text-fluid-hero {
+    font-size: clamp(2.25rem, 1.4rem + 3.5vw, 4.5rem);
+    line-height: 1.05;
   }
 }

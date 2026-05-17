@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { TapTarget } from '@/components/ui/TapTarget';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { SparkAvatar } from '@/components/ui/SparkAvatar';
+import { PageShell } from '@/components/ui/PageShell';
 import type { AgeGroupId, Lang, SparkForm, SparkLook } from '@/types';
 
 const AGE_GROUPS: { id: AgeGroupId; available: boolean }[] = [
@@ -52,14 +53,14 @@ export function ProfilePicker() {
   };
 
   return (
-    <main className="min-h-screen bg-canvas px-6 py-10">
-      <header className="mx-auto mb-8 flex max-w-5xl items-center justify-between">
-        <h1 className="font-display text-4xl font-bold text-moss">{t('profilePicker.title')}</h1>
+    <PageShell region="home">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display font-bold text-moss text-fluid-2xl">{t('profilePicker.title')}</h1>
         <LanguageToggle />
       </header>
 
       {!showCreate && (
-        <section className="mx-auto grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-3">
+        <section className="bw-grid-cards">
           {profiles.map((p) => (
             <motion.div
               key={p.id}
@@ -97,7 +98,7 @@ export function ProfilePicker() {
       )}
 
       {showCreate && (
-        <section className="mx-auto max-w-2xl space-y-6">
+        <section className="bw-content-narrow bw-stack">
           <div className="bw-card space-y-4">
             <h2 className="font-display text-2xl font-bold">{t('profilePicker.createTitle')}</h2>
             <input
@@ -188,7 +189,7 @@ export function ProfilePicker() {
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap justify-end gap-3">
             <Button variant="secondary" onClick={() => setShowCreate(false)} disabled={profiles.length === 0}>
               {t('cancel', { ns: 'common' })}
             </Button>
@@ -196,7 +197,7 @@ export function ProfilePicker() {
           </div>
         </section>
       )}
-    </main>
+    </PageShell>
   );
 }
 

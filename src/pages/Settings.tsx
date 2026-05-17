@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useProfileStore } from '@/stores/profileStore';
 import { Button } from '@/components/ui/Button';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
+import { PageShell } from '@/components/ui/PageShell';
 
 export function Settings() {
   const { t } = useTranslation('ui');
@@ -10,13 +11,13 @@ export function Settings() {
   const setActive = useProfileStore((s) => s.setActive);
 
   return (
-    <main className="min-h-screen bg-canvas px-6 py-10">
-      <header className="mx-auto mb-6 flex max-w-3xl items-center justify-between">
-        <h1 className="font-display text-4xl font-bold text-moss">{t('settings.title')}</h1>
+    <PageShell region="home" width="narrow">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display font-bold text-moss text-fluid-2xl">{t('settings.title')}</h1>
         <LanguageToggle />
       </header>
 
-      <div className="mx-auto max-w-3xl space-y-4">
+      <div className="flex flex-col gap-3">
         <Button onClick={() => navigate('/how-i-play')}>{t('settings.howIPlay')}</Button>
         <Button
           variant="secondary"
@@ -31,7 +32,7 @@ export function Settings() {
           ← {t('back', { ns: 'common' })}
         </Button>
       </div>
-    </main>
+    </PageShell>
   );
 }
 

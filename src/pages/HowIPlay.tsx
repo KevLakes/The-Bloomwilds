@@ -5,6 +5,7 @@ import { useProfileStore } from '@/stores/profileStore';
 import { Button } from '@/components/ui/Button';
 import { TapTarget } from '@/components/ui/TapTarget';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
+import { PageShell } from '@/components/ui/PageShell';
 import type { A11ySettings } from '@/types';
 
 type Motion = A11ySettings['motion'];
@@ -92,14 +93,14 @@ export function HowIPlay() {
   };
 
   return (
-    <main className="min-h-screen bg-canvas px-6 py-10">
-      <header className="mx-auto mb-6 flex max-w-3xl items-center justify-between">
-        <h1 className="font-display text-4xl font-bold text-moss">{t('title')}</h1>
+    <PageShell region="home" width="narrow">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display font-bold text-moss text-fluid-2xl">{t('title')}</h1>
         <LanguageToggle />
       </header>
-      <p className="mx-auto mb-6 max-w-3xl text-lg text-ink/70">{t('intro')}</p>
+      <p className="text-fluid-xl text-ink-soft">{t('intro')}</p>
 
-      <div className="mx-auto max-w-3xl space-y-4">
+      <div className="bw-stack">
         <Toggle
           label={t('bigText.label')}
           hint={t('bigText.hint')}
@@ -184,11 +185,11 @@ export function HowIPlay() {
           onChange={(v) => setKey('oneSwitch', v)}
         />
 
-        <div className="flex justify-end gap-3 pt-4">
+        <div className="flex justify-end gap-3 pt-2">
           <Button onClick={save}>{tc('save')}</Button>
         </div>
       </div>
-    </main>
+    </PageShell>
   );
 }
 

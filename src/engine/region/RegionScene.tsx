@@ -1,14 +1,14 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import { listForRegion } from '@/engine/challenge/registry';
 import { regionById } from '@/content/regions';
 import { useProgressStore } from '@/stores/progressStore';
-import { applyRegionTheme } from '@/systems/theming/regionTheme';
 import { Button } from '@/components/ui/Button';
 import { TapTarget } from '@/components/ui/TapTarget';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
+import { PageShell } from '@/components/ui/PageShell';
 import type { RegionId } from '@/types';
 
 export function RegionScene() {
@@ -25,15 +25,11 @@ export function RegionScene() {
     [region],
   );
 
-  useEffect(() => {
-    if (region) applyRegionTheme(region.id);
-  }, [region]);
-
   if (!region) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-canvas">
+      <PageShell region="home" contentClassName="items-center justify-center min-h-[60dvh]">
         <Button onClick={() => navigate('/map')}>← {t('back', { ns: 'common' })}</Button>
-      </main>
+      </PageShell>
     );
   }
 
@@ -41,13 +37,13 @@ export function RegionScene() {
   const bloomPct = (tier / 3) * 100;
 
   return (
-    <main className="min-h-screen bg-canvas px-6 py-10">
-      <header className="mx-auto mb-6 flex max-w-5xl items-center justify-between">
+    <PageShell region={region.id}>
+      <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="font-display text-4xl font-bold" style={{ color: 'var(--color-ink)' }}>
+          <h1 className="font-display font-bold text-fluid-2xl" style={{ color: 'var(--color-ink)' }}>
             {tr(`${region.id}.name`)}
           </h1>
-          <p className="text-ink/60">{tr(`${region.id}.tagline`)}</p>
+          <p className="text-ink-soft text-fluid-xl">{tr(`${region.id}.tagline`)}</p>
         </div>
         <div className="flex items-center gap-3">
           <LanguageToggle />
@@ -58,8 +54,8 @@ export function RegionScene() {
       </header>
 
       {/* Bloom meter */}
-      <div className="mx-auto mb-8 max-w-5xl">
-        <div className="flex items-center justify-between text-sm text-ink/70">
+      <div>
+        <div className="flex items-center justify-between text-sm text-ink-soft">
           <span>{tier === 0 ? t('regionMap.asleep') : tier >= 3 ? t('regionMap.bloomed') : t('regionMap.blooming')}</span>
           <span>{tier}/3</span>
         </div>
@@ -77,11 +73,12 @@ export function RegionScene() {
 
       {/* Scene illustration */}
       <div
-        className="mx-auto mb-8 flex aspect-[16/6] w-full max-w-5xl items-center justify-center rounded-bloom shadow-bloom"
+        className="flex aspect-[16/7] w-full items-center justify-center overflow-hidden rounded-bloom-lg shadow-bloom"
         style={{
-          background: tier === 0
-            ? 'linear-gradient(180deg, #E8E8E8 0%, #D0D0D0 100%)'
-            : 'linear-gradient(180deg, var(--color-canvas) 0%, var(--color-accent) 100%)',
+          background:
+            tier === 0
+              ? 'linear-gradient(180deg, #E8E8E8 0%, #D0D0D0 100%)'
+              : 'linear-gradient(180deg, var(--color-canvas-2) 0%, var(--color-accent) 100%)',
           filter: tier === 0 ? 'grayscale(1)' : 'none',
           transition: 'filter 800ms ease, background 800ms ease',
         }}
@@ -93,7 +90,7 @@ export function RegionScene() {
               key="bloom1"
               initial={{ scale: 0, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="mx-2 text-6xl"
+              className="mx-2 text-fluid-3xl"
             >
               🌳
             </motion.span>
@@ -103,7 +100,7 @@ export function RegionScene() {
               key="bloom2"
               initial={{ scale: 0, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="mx-2 text-6xl"
+              className="mx-2 text-fluid-3xl"
             >
               🌼
             </motion.span>
@@ -113,7 +110,7 @@ export function RegionScene() {
               key="bloom3"
               initial={{ scale: 0, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="mx-2 text-6xl"
+              className="mx-2 text-fluid-3xl"
             >
               🦋
             </motion.span>
@@ -122,10 +119,7 @@ export function RegionScene() {
       </div>
 
       {/* Challenge nodes */}
-      <section
-        className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3"
-        aria-label="Challenges"
-      >
+      <section className="bw-grid-cards" aria-label="Challenges">
         {challenges.map((c) => {
           const done = !!progress?.completed[c.id];
           return (
@@ -136,14 +130,14 @@ export function RegionScene() {
             >
               <span aria-hidden className="text-3xl">{done ? '✨' : '🌱'}</span>
               <h3 className="font-display text-xl font-bold">{tc(`${c.id.split('.').pop()}.title`)}</h3>
-              <p className="text-sm text-ink/60">
+              <p className="text-sm text-ink-soft">
                 {done ? `★ ${progress?.completed[c.id].stars}` : `~${Math.round(c.estSeconds / 60)} min`}
               </p>
             </TapTarget>
           );
         })}
       </section>
-    </main>
+    </PageShell>
   );
 }
 
