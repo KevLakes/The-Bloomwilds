@@ -3,9 +3,11 @@ import { router } from './router';
 import { CaptionBar } from '@/components/ui/CaptionBar';
 import { GlobalDefs } from '@/components/ui/GlobalDefs';
 import { useA11yCssBridge } from '@/systems/a11y/useA11ySettings';
+import { useAudioBridge } from '@/systems/audio/useAudioBridge';
 
 export function App() {
   useA11yCssBridge();
+  useAudioBridge();
   return (
     <>
       <GlobalDefs />

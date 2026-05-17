@@ -11,6 +11,7 @@ import { PageShell } from '@/components/ui/PageShell';
 import { MapNode } from '@/components/ui/MapNode';
 import { BloomBackground } from '@/components/ui/BloomBackground';
 import { PathLine } from '@/assets/illustrations/shapes';
+import { startAmbient } from '@/systems/audio/ambient';
 import { useProfileStore } from '@/stores/profileStore';
 
 export function Overworld() {
@@ -23,6 +24,7 @@ export function Overworld() {
 
   useEffect(() => {
     if (active && !progress) void loadFor(active.id);
+    startAmbient('home');
   }, [active, progress, loadFor]);
 
   return (

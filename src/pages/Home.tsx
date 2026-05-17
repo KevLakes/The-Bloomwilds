@@ -10,6 +10,7 @@ import { SparkAvatar } from '@/components/ui/SparkAvatar';
 import { PageShell } from '@/components/ui/PageShell';
 import { BloomBackground } from '@/components/ui/BloomBackground';
 import { IconBadge } from '@/components/ui/IconBadge';
+import { startAmbient } from '@/systems/audio/ambient';
 
 export function Home() {
   const { t } = useTranslation('ui');
@@ -20,6 +21,7 @@ export function Home() {
 
   useEffect(() => {
     if (active) void loadProgress(active.id);
+    startAmbient('home');
   }, [active, loadProgress]);
 
   useEffect(() => {

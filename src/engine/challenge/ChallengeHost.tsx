@@ -15,16 +15,16 @@ import { Confetti } from '@/components/ui/Confetti';
 import { RegionIllustration } from '@/assets/illustrations/regions';
 import { Sparkle, Star } from '@/assets/illustrations/shapes';
 import { play as narrate } from '@/systems/narration/narrator';
-import { audioBus } from '@/systems/audio/audioBus';
+import { playSfx } from '@/systems/audio/procedural';
+import { startAmbient } from '@/systems/audio/ambient';
 import { applyRegionTheme } from '@/systems/theming/regionTheme';
 import { useProfileStore } from '@/stores/profileStore';
 import { useProgressStore } from '@/stores/progressStore';
 import { useA11yStore } from '@/stores/a11yStore';
 import type { ChallengeResult, Lang } from '@/types';
 
-function playSfx(name: 'sparkle' | 'bloom' | 'success' | 'gentle-error'): void {
-  void audioBus.play(`/audio/sfx/${name}.mp3`, { channel: 'sfx' });
-}
+// Sfx now go through procedural Web Audio — no asset files required.
+// The ctx.sfx() callsite in primitives feeds directly into playSfx() below.
 
 interface CelebrationProps {
   region: ChallengeDef['regionId'];
@@ -150,7 +150,10 @@ export function ChallengeRoute() {
   const recordCompletion = useProgressStore((s) => s.recordCompletion);
 
   useEffect(() => {
-    if (def) applyRegionTheme(def.regionId);
+    if (def) {
+      applyRegionTheme(def.regionId);
+      startAmbient(def.regionId);
+    }
   }, [def]);
 
   useEffect(() => {

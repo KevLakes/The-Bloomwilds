@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -11,6 +11,7 @@ import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { PageShell } from '@/components/ui/PageShell';
 import { RegionIllustration } from '@/assets/illustrations/regions';
 import { Sparkle, Leaf } from '@/assets/illustrations/shapes';
+import { startAmbient } from '@/systems/audio/ambient';
 import type { RegionId } from '@/types';
 
 export function RegionScene() {
@@ -26,6 +27,10 @@ export function RegionScene() {
     () => (region ? listForRegion(region.id) : []),
     [region],
   );
+
+  useEffect(() => {
+    if (region) startAmbient(region.id);
+  }, [region]);
 
   if (!region) {
     return (
