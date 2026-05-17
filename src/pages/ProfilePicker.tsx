@@ -61,35 +61,45 @@ export function ProfilePicker() {
 
       {!showCreate && (
         <section className="bw-grid-cards">
-          {profiles.map((p) => (
-            <motion.div
-              key={p.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bw-card flex flex-col items-center gap-3"
-            >
-              <SparkAvatar look={p.spark} size={96} />
-              <p className="font-display text-2xl font-bold">{p.name}</p>
-              <p className="text-sm text-ink/60">{t(`ageGroups.${p.ageGroup}` as const)}</p>
-              <div className="flex gap-2">
-                <Button onClick={() => pick(p.id)}>{t('start', { ns: 'common' })}</Button>
-                <TapTarget
-                  className="rounded-bloom px-3 py-2 text-sm text-ink/60"
-                  onClick={() => {
-                    if (window.confirm(t('profilePicker.deleteConfirm'))) void remove(p.id);
-                  }}
-                  aria-label={t('profilePicker.delete')}
-                >
-                  ✕
-                </TapTarget>
-              </div>
-            </motion.div>
-          ))}
+          {profiles.map((p, i) => {
+            const tilt = ((i * 7) % 5) - 2; // deterministic small tilt
+            return (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, y: 24, rotate: tilt - 4 }}
+                animate={{ opacity: 1, y: 0, rotate: tilt }}
+                whileHover={{ y: -3, rotate: 0, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+                className="relative"
+              >
+                <div className="bw-card flex flex-col items-center gap-3">
+                  <SparkAvatar look={p.spark} size={96} />
+                  <p className="font-display text-xl font-bold sm:text-2xl">{p.name}</p>
+                  <p className="text-sm text-ink-soft">{t(`ageGroups.${p.ageGroup}` as const)}</p>
+                  <div className="flex gap-2">
+                    <Button onClick={() => pick(p.id)}>{t('start', { ns: 'common' })}</Button>
+                    <TapTarget
+                      className="rounded-full px-3 py-2 text-sm font-display text-ink-soft hover:bg-ink/5"
+                      onClick={() => {
+                        if (window.confirm(t('profilePicker.deleteConfirm'))) void remove(p.id);
+                      }}
+                      aria-label={t('profilePicker.delete')}
+                    >
+                      ✕
+                    </TapTarget>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
           <TapTarget
             onClick={() => setShowCreate(true)}
-            className="bw-card flex min-h-[200px] flex-col items-center justify-center gap-2 border-2 border-dashed border-leaf/60 bg-white/40"
+            className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-bloom-lg border-[3px] border-dashed bg-white/40 transition hover:bg-white/70"
+            style={{ borderColor: 'color-mix(in srgb, var(--color-accent) 60%, transparent)' }}
           >
-            <span className="text-5xl">＋</span>
+            <span className="text-5xl animate-soft-pulse" style={{ color: 'var(--color-accent)' }}>
+              ＋
+            </span>
             <span className="font-display text-xl font-bold text-moss">
               {t('profilePicker.newProfile')}
             </span>
@@ -100,16 +110,25 @@ export function ProfilePicker() {
       {showCreate && (
         <section className="bw-content-narrow bw-stack">
           <div className="bw-card space-y-4">
-            <h2 className="font-display text-2xl font-bold">{t('profilePicker.createTitle')}</h2>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t('profilePicker.namePlaceholder')}
-              className="w-full rounded-bloom border-2 border-leaf/40 px-4 py-3 text-2xl"
-              aria-label={t('profilePicker.namePlaceholder')}
-              maxLength={20}
-            />
+            <h2 className="font-display text-xl font-bold sm:text-2xl">{t('profilePicker.createTitle')}</h2>
+            <label className="block">
+              <span className="mb-1 block text-sm font-display font-bold text-ink-soft">
+                {t('profilePicker.namePlaceholder')}
+              </span>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={t('profilePicker.namePlaceholder')}
+                className="w-full rounded-bloom-lg border-[3px] bg-white px-4 py-3 text-xl font-display transition focus:outline-none sm:text-2xl"
+                style={{
+                  borderColor: 'color-mix(in srgb, var(--color-accent) 35%, transparent)',
+                  boxShadow: '4px 5px 0 0 color-mix(in srgb, var(--color-ink) 14%, transparent)',
+                }}
+                aria-label={t('profilePicker.namePlaceholder')}
+                maxLength={20}
+              />
+            </label>
           </div>
 
           <div className="bw-card space-y-3">

@@ -5,7 +5,15 @@ import { motion } from 'framer-motion';
 import { useProgressStore } from '@/stores/progressStore';
 import { Button } from '@/components/ui/Button';
 import { PageShell } from '@/components/ui/PageShell';
+import { Sparkle } from '@/assets/illustrations/shapes';
 import { stickers as allStickers } from '@/content/stickers';
+
+/** Deterministic small tilt per id so layout is stable across renders. */
+function tiltFor(id: string): number {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) | 0;
+  return ((h % 9) - 4) * 0.9; // -3.6° to +3.6°
+}
 
 export function StickerBook() {
   const { t } = useTranslation('ui');
@@ -36,24 +44,53 @@ export function StickerBook() {
           <section key={regionId} className="bw-stack">
             <h2 className="font-display font-bold text-fluid-xl">{tr(`${regionId}.name`)}</h2>
             <div
-              className="grid gap-3"
+              className="grid gap-3 sm:gap-4"
               style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 6rem), 1fr))' }}
             >
               {list.map((s) => {
                 const have = ownedSet.has(s.id);
+                const tilt = tiltFor(s.id);
                 return (
                   <motion.div
                     key={s.id}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className={`bw-card flex aspect-square flex-col items-center justify-center gap-1 ${
-                      have ? '' : 'opacity-40 grayscale'
-                    }`}
+                    initial={{ scale: 0.7, opacity: 0, rotate: tilt - 6 }}
+                    animate={{ scale: 1, opacity: 1, rotate: tilt }}
+                    whileHover={have ? { rotate: 0, scale: 1.06, y: -3 } : undefined}
+                    transition={{ type: 'spring', stiffness: 280, damping: 20 }}
+                    className={`relative aspect-square ${have ? '' : ''}`}
                   >
-                    <span aria-hidden className="text-4xl">{s.glyph}</span>
-                    <span className="text-[10px] uppercase tracking-wide text-ink-soft">
-                      {have ? '★' : '?'}
-                    </span>
+                    {have ? (
+                      <div
+                        className="relative flex h-full w-full flex-col items-center justify-center gap-1 rounded-bloom-lg border-[3px] bg-white p-2"
+                        style={{
+                          borderColor: 'var(--color-ink)',
+                          boxShadow: '5px 6px 0 0 var(--color-ink)',
+                        }}
+                      >
+                        <span aria-hidden className="text-3xl sm:text-4xl">
+                          {s.glyph}
+                        </span>
+                        <span
+                          className="absolute -right-2 -top-2 animate-sparkle"
+                          aria-hidden
+                          style={{ color: 'var(--color-accent-3)' }}
+                        >
+                          <Sparkle size={20} />
+                        </span>
+                      </div>
+                    ) : (
+                      <div
+                        className="flex h-full w-full flex-col items-center justify-center rounded-bloom-lg border-2 border-dashed bg-white/40"
+                        style={{ borderColor: 'color-mix(in srgb, var(--color-ink) 22%, transparent)' }}
+                      >
+                        <span
+                          aria-hidden
+                          className="text-2xl text-ink-soft opacity-50 sm:text-3xl"
+                        >
+                          ?
+                        </span>
+                      </div>
+                    )}
                   </motion.div>
                 );
               })}

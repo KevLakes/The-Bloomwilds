@@ -266,6 +266,46 @@
     background: color-mix(in srgb, white 90%, transparent);
     box-shadow: 0 6px 18px -8px rgba(46, 52, 64, 0.25);
   }
+
+  /* Range slider — paper-craft track + thumb */
+  .bw-slider {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    height: 32px;
+    cursor: pointer;
+  }
+  .bw-slider::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  }
+  .bw-slider::-moz-range-track {
+    height: 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  }
+  .bw-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 3px solid white;
+    box-shadow: 0 4px 0 0 color-mix(in srgb, var(--color-ink) 22%, transparent);
+    margin-top: -8px;
+    cursor: pointer;
+  }
+  .bw-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 3px solid white;
+    box-shadow: 0 4px 0 0 color-mix(in srgb, var(--color-ink) 22%, transparent);
+    cursor: pointer;
+  }
 }
 
 @layer utilities {
