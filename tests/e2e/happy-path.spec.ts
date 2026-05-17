@@ -13,8 +13,8 @@ import { test, expect } from '@playwright/test';
 test('create a Swedish profile and complete a Letterglade challenge', async ({ page }) => {
   await page.goto('/');
 
-  // Boot screen redirects to /profiles
-  await expect(page).toHaveURL(/\/profiles$/, { timeout: 5000 });
+  // Boot screen runs the wake-up sequence (~4.4s) then redirects to /profiles
+  await expect(page).toHaveURL(/\/profiles$/, { timeout: 8000 });
   await expect(page.getByRole('heading', { name: /Vem spelar|Who's playing/i })).toBeVisible();
 
   // Name input + Swedish + create
