@@ -31,7 +31,7 @@ jobs:
 
       - name: Build
         env:
-          VITE_BASE_PATH: /cloude/
+          VITE_BASE_PATH: /The-Bloomwilds/
         run: npm run build
 
       - name: SPA fallback (copy index.html to 404.html)
