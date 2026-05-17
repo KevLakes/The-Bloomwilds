@@ -4,7 +4,10 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
 
+const base = process.env.VITE_BASE_PATH ?? '/';
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     VitePWA({
@@ -19,15 +22,16 @@ export default defineConfig({
         background_color: '#FDF6E3',
         display: 'standalone',
         orientation: 'any',
-        start_url: '/',
+        start_url: base,
+        scope: base,
         icons: [
           {
-            src: '/art/ui/icon-192.png',
+            src: `${base}art/ui/icon-192.png`,
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/art/ui/icon-512.png',
+            src: `${base}art/ui/icon-512.png`,
             sizes: '512x512',
             type: 'image/png',
           },
@@ -35,6 +39,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,mp3,woff2}'],
+        navigateFallback: `${base}index.html`,
       },
     }),
   ],
