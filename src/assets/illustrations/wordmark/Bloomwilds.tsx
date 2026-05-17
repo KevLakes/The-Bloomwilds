@@ -34,6 +34,7 @@ export function BloomwildsWordmark({ size = 320, className = '', ...rest }: Prop
         fontWeight="700"
         fontSize="56"
         fill="url(#bw-word-fill)"
+        filter="url(#bw-paper-edge-sm)"
         style={{ paintOrder: 'stroke', stroke: 'var(--color-canvas-2)', strokeWidth: 6, strokeLinejoin: 'round' }}
       >
         Bloomwilds

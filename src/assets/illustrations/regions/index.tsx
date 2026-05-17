@@ -44,7 +44,9 @@ export function RegionIllustration({ region, tier = 3, className = '' }: RegionI
       </defs>
       <rect width="400" height="200" fill={`url(#sky-${region})`} />
       <rect width="400" height="200" fill={`url(#glow-${region})`} />
-      {scene(tier)}
+      {/* Paper-edge filter applied to the whole scene group — every shape inside
+          gets the same gentle wobble, which is cheaper than per-shape filtering. */}
+      <g filter="url(#bw-paper-edge)">{scene(tier)}</g>
     </svg>
   );
 }

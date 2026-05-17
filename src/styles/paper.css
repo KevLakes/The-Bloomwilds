@@ -1,0 +1,89 @@
+/**
+ * Paper-craft visual language.
+ *
+ * The jagged-edge filter is defined as an SVG <filter> in <GlobalDefs/> (mounted
+ * by App.tsx). Any HTML or SVG element can opt in via:
+ *   - className="bw-paper-edge"     — subtle wobble for medium/large surfaces
+ *   - className="bw-paper-edge-sm"  — barely perceptible, for buttons/badges
+ *   - className="bw-paper-grain"    — overlays subtle paper grain noise
+ *
+ * Paper grain is a data-URL noise applied via mix-blend-mode at low opacity. No
+ * extra HTTP request, fully cacheable, dark mode safe.
+ */
+
+:root {
+  /* Subtle warm beige used as the "shadow" colour behind paper layers */
+  --bw-paper-shadow: #2e3440;
+  /* Offset amount for the two-layer paper depth */
+  --bw-paper-offset-x: 4px;
+  --bw-paper-offset-y: 5px;
+}
+
+/* Paper edge filter — referenced from the global <defs> SVG */
+.bw-paper-edge {
+  filter: url(#bw-paper-edge);
+}
+.bw-paper-edge-sm {
+  filter: url(#bw-paper-edge-sm);
+}
+
+/* Paper grain overlay — applied as a positioned ::after */
+.bw-paper-grain {
+  position: relative;
+  isolation: isolate;
+}
+.bw-paper-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='2' stitchTiles='stitch' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  mix-blend-mode: multiply;
+  opacity: 0.07;
+  border-radius: inherit;
+  z-index: 0;
+}
+.bw-paper-grain > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Two-layer paper depth — used by .bw-card, .bw-sticker, and the PaperLayer
+   component. Offset shadow uses currentColor at lowered alpha so it picks
+   up the active region theme automatically.
+*/
+.bw-paper-shadow {
+  box-shadow:
+    var(--bw-paper-offset-x) var(--bw-paper-offset-y) 0 0
+      color-mix(in srgb, var(--bw-paper-shadow) 22%, transparent),
+    0 12px 28px -14px color-mix(in srgb, var(--bw-paper-shadow) 35%, transparent);
+}
+
+/* Glue-dot accents at the corners of a paper card */
+.bw-glue-dots {
+  position: relative;
+}
+.bw-glue-dots::before,
+.bw-glue-dots::after,
+.bw-glue-dots > .bw-glue-tl,
+.bw-glue-dots > .bw-glue-tr {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-ink) 18%, transparent);
+  box-shadow: inset -1px -1px 0 0 rgba(255, 255, 255, 0.35);
+}
+.bw-glue-dots::before {
+  top: 8px;
+  left: 8px;
+}
+.bw-glue-dots::after {
+  bottom: 8px;
+  right: 8px;
+}
+
+/* Reduced-motion / off-motion: still keep the look, just don't add
+   the parallax that comes with depth. The CSS box-shadow remains. */

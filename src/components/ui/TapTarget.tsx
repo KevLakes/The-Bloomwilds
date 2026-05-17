@@ -1,17 +1,30 @@
-import { useEffect, useRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 import { useA11yStore } from '@/stores/a11yStore';
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends HTMLMotionProps<'button'> {
   minSize?: number;
   children: ReactNode;
+  /** Skip the spring-physics press animation. Use for non-tactile chrome like the language toggle. */
+  noPressFx?: boolean;
 }
 
 /**
- * Every clickable in the game should be a TapTarget — guarantees 64px+ hit area
- * and supports dwell-click (hover/focus and hold to activate) when enabled.
+ * Every clickable in the game is a TapTarget. Guarantees:
+ *  - 48px+ hit area (defaults to 48 to match WCAG; pass `minSize` to enforce more)
+ *  - Spring-physics press feedback gated on a11y motion setting
+ *  - Dwell-click (hover/focus + hold to activate) when `dwellMs > 0`
  */
-export function TapTarget({ minSize = 64, children, onClick, style, ...rest }: Props) {
+export function TapTarget({
+  minSize = 48,
+  children,
+  onClick,
+  style,
+  noPressFx,
+  ...rest
+}: Props) {
   const dwellMs = useA11yStore((s) => s.settings.dwellMs);
+  const motionLevel = useA11yStore((s) => s.settings.motion);
   const ref = useRef<HTMLButtonElement>(null);
   const timer = useRef<number | undefined>(undefined);
 
@@ -48,14 +61,23 @@ export function TapTarget({ minSize = 64, children, onClick, style, ...rest }: P
     };
   }, [dwellMs]);
 
+  const wantsMotion = !noPressFx && motionLevel !== 'off';
+  const tapAnim = wantsMotion
+    ? motionLevel === 'reduced'
+      ? { scale: 0.98 }
+      : { scale: 0.94, y: 2 }
+    : undefined;
+
   return (
-    <button
+    <motion.button
       ref={ref}
       onClick={onClick}
       style={{ minWidth: minSize, minHeight: minSize, ...style }}
+      whileTap={tapAnim}
+      transition={{ type: 'spring', stiffness: 600, damping: 22, mass: 0.4 }}
       {...rest}
     >
       {children}
-    </button>
+    </motion.button>
   );
 }

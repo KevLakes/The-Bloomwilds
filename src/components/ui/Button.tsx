@@ -1,7 +1,8 @@
-import type { ReactNode, ButtonHTMLAttributes } from 'react';
+import type { ReactNode } from 'react';
+import type { HTMLMotionProps } from 'framer-motion';
 import { TapTarget } from './TapTarget';
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends HTMLMotionProps<'button'> {
   variant?: 'primary' | 'secondary';
   children: ReactNode;
 }
