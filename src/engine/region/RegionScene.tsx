@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { listForRegion } from '@/engine/challenge/registry';
 import { regionById } from '@/content/regions';
 import { useProgressStore } from '@/stores/progressStore';
@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/Button';
 import { TapTarget } from '@/components/ui/TapTarget';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { PageShell } from '@/components/ui/PageShell';
+import { RegionIllustration } from '@/assets/illustrations/regions';
+import { Sparkle, Leaf } from '@/assets/illustrations/shapes';
 import type { RegionId } from '@/types';
 
 export function RegionScene() {
@@ -73,67 +75,52 @@ export function RegionScene() {
 
       {/* Scene illustration */}
       <div
-        className="flex aspect-[16/7] w-full items-center justify-center overflow-hidden rounded-bloom-lg shadow-bloom"
-        style={{
-          background:
-            tier === 0
-              ? 'linear-gradient(180deg, #E8E8E8 0%, #D0D0D0 100%)'
-              : 'linear-gradient(180deg, var(--color-canvas-2) 0%, var(--color-accent) 100%)',
-          filter: tier === 0 ? 'grayscale(1)' : 'none',
-          transition: 'filter 800ms ease, background 800ms ease',
-        }}
+        className="relative aspect-[16/7] w-full overflow-hidden rounded-bloom-lg shadow-bloom-lg"
         aria-hidden
       >
-        <AnimatePresence>
-          {tier >= 1 && (
-            <motion.span
-              key="bloom1"
-              initial={{ scale: 0, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              className="mx-2 text-fluid-3xl"
-            >
-              🌳
-            </motion.span>
-          )}
-          {tier >= 2 && (
-            <motion.span
-              key="bloom2"
-              initial={{ scale: 0, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              className="mx-2 text-fluid-3xl"
-            >
-              🌼
-            </motion.span>
-          )}
-          {tier >= 3 && (
-            <motion.span
-              key="bloom3"
-              initial={{ scale: 0, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              className="mx-2 text-fluid-3xl"
-            >
-              🦋
-            </motion.span>
-          )}
-        </AnimatePresence>
+        <RegionIllustration region={region.id} tier={tier as 0 | 1 | 2 | 3} />
       </div>
 
       {/* Challenge nodes */}
       <section className="bw-grid-cards" aria-label="Challenges">
-        {challenges.map((c) => {
+        {challenges.map((c, i) => {
           const done = !!progress?.completed[c.id];
           return (
-            <TapTarget
+            <motion.div
               key={c.id}
-              onClick={() => navigate(`/play/${encodeURIComponent(c.id)}`)}
-              className="bw-card flex flex-col items-start gap-2 text-left"
+              initial={{ scale: 0.92, opacity: 0, y: 12 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.04 }}
             >
-              <span aria-hidden className="text-3xl">{done ? '✨' : '🌱'}</span>
-              <h3 className="font-display text-xl font-bold">{tc(`${c.id.split('.').pop()}.title`)}</h3>
-              <p className="text-sm text-ink-soft">
-                {done ? `★ ${progress?.completed[c.id].stars}` : `~${Math.round(c.estSeconds / 60)} min`}
-              </p>
-            </TapTarget>
+              <TapTarget
+                onClick={() => navigate(`/play/${encodeURIComponent(c.id)}`)}
+                className={`bw-card flex h-full flex-col items-start gap-2 text-left transition hover:-translate-y-0.5 ${
+                  done ? 'ring-2' : ''
+                }`}
+                style={done ? { boxShadow: '0 6px 0 0 var(--color-accent)' } : undefined}
+              >
+                <span
+                  aria-hidden
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full"
+                  style={{
+                    background: done
+                      ? 'var(--color-accent)'
+                      : 'color-mix(in srgb, var(--color-accent) 25%, transparent)',
+                    color: done ? 'white' : 'var(--color-accent)',
+                  }}
+                >
+                  {done ? <Sparkle size={20} /> : <Leaf size={20} />}
+                </span>
+                <h3 className="font-display text-lg font-bold sm:text-xl">
+                  {tc(`${c.id.split('.').pop()}.title`)}
+                </h3>
+                <p className="text-sm text-ink-soft">
+                  {done
+                    ? `★ ${progress?.completed[c.id].stars}`
+                    : `~${Math.round(c.estSeconds / 60)} min`}
+                </p>
+              </TapTarget>
+            </motion.div>
           );
         })}
       </section>

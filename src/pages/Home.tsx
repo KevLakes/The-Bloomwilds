@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { SparkAvatar } from '@/components/ui/SparkAvatar';
 import { PageShell } from '@/components/ui/PageShell';
+import { BloomBackground } from '@/components/ui/BloomBackground';
+import { IconBadge } from '@/components/ui/IconBadge';
 
 export function Home() {
   const { t } = useTranslation('ui');
@@ -27,7 +29,9 @@ export function Home() {
   if (!active) return null;
 
   return (
-    <PageShell region="home">
+    <PageShell region="home" className="relative">
+      <BloomBackground region="home" tier={3} />
+
       <header className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display font-bold text-moss text-fluid-2xl">
           {t('home.greeting', { name: active.name })}
@@ -40,17 +44,13 @@ export function Home() {
           <SparkAvatar look={active.spark} size={180} />
         </motion.div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3 text-lg">
-          <span className="bw-pill inline-flex items-center gap-2 font-display font-bold">
-            <span aria-hidden>🌱</span>
-            <span>{progress?.seeds ?? 0}</span>
-            <span className="text-ink-soft font-normal">{t('seeds')}</span>
-          </span>
-          <span className="bw-pill inline-flex items-center gap-2 font-display font-bold">
-            <span aria-hidden>⭐</span>
-            <span>{progress?.inventory.stickers.length ?? 0}</span>
-            <span className="text-ink-soft font-normal">{t('stickers')}</span>
-          </span>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <IconBadge icon="🌱" value={progress?.seeds ?? 0} label={t('seeds')} />
+          <IconBadge
+            icon="⭐"
+            value={progress?.inventory.stickers.length ?? 0}
+            label={t('stickers')}
+          />
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-3">
