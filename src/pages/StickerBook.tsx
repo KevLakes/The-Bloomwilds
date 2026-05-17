@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useProgressStore } from '@/stores/progressStore';
 import { Button } from '@/components/ui/Button';
+import { PageShell } from '@/components/ui/PageShell';
 import { stickers as allStickers } from '@/content/stickers';
 
 export function StickerBook() {
@@ -22,19 +23,22 @@ export function StickerBook() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-canvas px-6 py-10">
-      <header className="mx-auto mb-6 flex max-w-5xl items-center justify-between">
-        <h1 className="font-display text-4xl font-bold text-moss">{t('stickers')}</h1>
+    <PageShell region="home">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display font-bold text-moss text-fluid-2xl">{t('stickers')}</h1>
         <Button variant="secondary" onClick={() => navigate('/home')}>
           ← {t('back', { ns: 'common' })}
         </Button>
       </header>
 
-      <div className="mx-auto max-w-5xl space-y-8">
+      <div className="bw-stack">
         {Object.entries(byRegion).map(([regionId, list]) => (
-          <section key={regionId}>
-            <h2 className="mb-3 font-display text-2xl font-bold">{tr(`${regionId}.name`)}</h2>
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 md:grid-cols-6">
+          <section key={regionId} className="bw-stack">
+            <h2 className="font-display font-bold text-fluid-xl">{tr(`${regionId}.name`)}</h2>
+            <div
+              className="grid gap-3"
+              style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 6rem), 1fr))' }}
+            >
               {list.map((s) => {
                 const have = ownedSet.has(s.id);
                 return (
@@ -47,7 +51,7 @@ export function StickerBook() {
                     }`}
                   >
                     <span aria-hidden className="text-4xl">{s.glyph}</span>
-                    <span className="text-[10px] uppercase tracking-wide text-ink/60">
+                    <span className="text-[10px] uppercase tracking-wide text-ink-soft">
                       {have ? '★' : '?'}
                     </span>
                   </motion.div>
@@ -57,7 +61,7 @@ export function StickerBook() {
           </section>
         ))}
       </div>
-    </main>
+    </PageShell>
   );
 }
 

@@ -19,20 +19,25 @@ export function LanguageToggle() {
   const current = (i18n.language as Lang) ?? 'sv';
 
   return (
-    <div className="inline-flex gap-2 rounded-bloom bg-white/80 p-2 shadow-bloom" role="group" aria-label="Language">
+    <div
+      className="inline-flex gap-1 rounded-full bg-white/85 p-1 shadow-bloom backdrop-blur-sm"
+      role="group"
+      aria-label="Language"
+    >
       {(['sv', 'en'] as Lang[]).map((lng) => (
         <TapTarget
           key={lng}
           onClick={() => choose(lng)}
           aria-pressed={current === lng}
-          className={`rounded-bloom px-4 py-3 text-lg font-display ${
-            current === lng ? 'bg-leaf text-white' : 'bg-transparent text-ink'
+          className={`rounded-full px-3 py-2 text-sm font-display font-bold transition sm:text-base ${
+            current === lng ? 'bg-accent text-white shadow-bloom' : 'bg-transparent text-ink-soft'
           }`}
         >
-          <span aria-hidden className="mr-2">
+          <span aria-hidden className="mr-1.5">
             {FLAGS[lng]}
           </span>
-          {LABELS[lng]}
+          <span className="hidden sm:inline">{LABELS[lng]}</span>
+          <span className="sm:hidden">{lng.toUpperCase()}</span>
         </TapTarget>
       ))}
     </div>

@@ -25,7 +25,10 @@ export function CaptionBar() {
   if (!captionsOn) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
+    <div
+      className="pointer-events-none fixed inset-x-0 z-50 flex justify-center px-4"
+      style={{ bottom: 'calc(1rem + var(--bw-safe-bottom))' }}
+    >
       <AnimatePresence>
         {caption && (
           <motion.div
@@ -37,7 +40,7 @@ export function CaptionBar() {
             role="status"
             aria-live="polite"
             lang={caption.lang}
-            className="max-w-3xl rounded-bloom bg-ink/90 px-6 py-3 text-center text-lg text-white shadow-bloom"
+            className="max-w-[min(40rem,90vw)] rounded-bloom-lg bg-ink/90 px-6 py-3 text-center text-lg text-white shadow-bloom-lg backdrop-blur-sm"
           >
             {caption.text}
           </motion.div>
